@@ -1,1 +1,1808 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SE²∂PEM – Sesión Orientativa · Recursos Didácticos</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"/>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --navy:#003B75;--crimson:#9b1845;--gold:#c8a951;--light:#f5f3ee;
+      --white:#ffffff;--border:#d6d0c4;--text:#2c2c2c;--muted:#6b6560;
+      --accent-bg:#eef1f8;--success:#2e7d52;
+      /* Newton palette kept for canvas elements */
+      --amber:#c8a951;--amber-light:#e8c97a;--brown-dark:#003B75;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--light);color:var(--text);font-family:'Source Serif 4',Georgia,serif;font-size:16px;line-height:1.7;min-height:100vh;overflow-x:hidden;}
 
+    /* ══════════ HEADER (exact replica from reference) ══════════ */
+    header{background:var(--navy);border-bottom:4px solid var(--crimson);padding:18px 40px;display:grid;grid-template-columns:140px 1fr 140px;align-items:center;gap:16px;position:relative;}
+    header::after{content:'';position:absolute;bottom:-8px;left:0;right:0;height:3px;background:var(--gold);opacity:0.45;}
+    .logo-wrap{display:flex;align-items:center;justify-content:center;}
+    .logo-wrap img{height:80px;width:auto;object-fit:contain;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.30));}
+    .logo-wrap img.logo-seapem{height:58px;}
+    .header-center{text-align:center;color:var(--white);}
+    .seminar-label{font-family:'Playfair Display',serif;font-weight:700;font-size:0.88rem;color:var(--gold);margin-bottom:4px;}
+    .header-center h1{font-family:'Source Serif 4',serif;font-size:0.82rem;font-weight:400;font-style:italic;line-height:1.4;max-width:560px;margin:0 auto 6px;color:rgba(255,255,255,0.85);}
+    .header-subtitle{font-size:0.76rem;color:rgba(255,255,255,0.55);letter-spacing:0.07em;line-height:1.6;}
+
+    /* ══════════ PAGE TITLE BANNER ══════════ */
+    .page-title-banner{background:var(--white);border-bottom:1px solid var(--border);padding:38px 40px 30px;text-align:center;}
+    .page-title-banner h1{font-family:'Playfair Display',serif;font-size:clamp(1.7rem,4vw,2.6rem);font-weight:700;color:var(--navy);line-height:1.2;margin-bottom:10px;letter-spacing:-0.01em;}
+    .page-title-banner h1 em{font-style:italic;color:var(--crimson);}
+    .page-title-divider{width:60px;height:3px;background:linear-gradient(90deg,var(--crimson),var(--gold));margin:0 auto 12px;border-radius:2px;}
+    .page-title-professor{font-family:'Source Serif 4',serif;font-size:0.92rem;font-style:italic;color:var(--muted);letter-spacing:0.04em;}
+    .page-title-professor span{color:var(--navy);font-weight:600;font-style:normal;}
+
+    /* ══════════ OBJETIVO BOX ══════════ */
+    .objetivo-box{background:var(--white);border-left:4px solid var(--crimson);border-radius:0 3px 3px 0;padding:20px 28px;margin-bottom:32px;box-shadow:0 2px 12px rgba(0,59,117,0.07);}
+    .objetivo-label{font-family:'Playfair Display',serif;font-size:0.78rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--crimson);margin-bottom:8px;}
+    .objetivo-text{font-family:'Source Serif 4',serif;font-size:1rem;line-height:1.8;color:var(--text);}
+    .objetivo-text strong{color:var(--navy);}
+
+    main{max-width:960px;margin:0 auto;padding:50px 22px 80px;}
+
+    .tstar-row{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;margin-top:.8rem;background:rgba(155,24,69,.08);border:1px solid rgba(155,24,69,.25);border-radius:4px;padding:.7rem 1rem;}
+    .tstar-label{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,243,238,.6);white-space:nowrap;}
+    .tstar-badge{background:var(--crimson);color:white;font-family:'JetBrains Mono',monospace;font-size:.80rem;font-weight:700;padding:.25rem .8rem;border-radius:20px;white-space:nowrap;min-width:72px;text-align:center;}
+
+    /* ══════════ LATERAL LIMITS PANEL ══════════ */
+    .lateral-card{background:rgba(245,243,238,.05);border:1px solid rgba(245,243,238,.12);border-radius:4px;padding:0.9rem 1rem;text-align:center;transition:border-color .4s,background .4s;}
+    .lateral-card.highlight{background:rgba(200,169,81,.1);border-color:rgba(200,169,81,.4);}
+    .lateral-card.active-left{border-color:#4a7fa8;background:rgba(74,127,168,.12);}
+    .lateral-card.active-right{border-color:#c85050;background:rgba(200,80,80,.12);}
+    .lateral-label{font-family:'JetBrains Mono',monospace;font-size:0.60rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,243,238,.5);margin-bottom:.4rem;}
+    .lateral-math{font-family:'JetBrains Mono',monospace;font-size:0.74rem;color:var(--gold);margin-bottom:.3rem;min-height:1.2rem;}
+    .lateral-val{font-family:'JetBrains Mono',monospace;font-size:1rem;font-weight:700;color:var(--amber-light);}
+    .lateral-conclusion{background:rgba(46,125,82,.12);border:1px solid rgba(46,125,82,.35);border-radius:4px;padding:.75rem 1.2rem;font-family:'Source Serif 4',serif;font-size:.88rem;color:rgba(245,243,238,.85);text-align:center;}
+
+    /* ══════════ PROP GRID ══════════ */
+    .prop-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin-top:1.5rem;}
+    @media(max-width:700px){.prop-grid{grid-template-columns:1fr;}}
+    .prop-card{background:var(--accent-bg);border:1px solid var(--border);border-top:3px solid var(--navy);border-radius:3px;padding:1rem 1.2rem;display:flex;gap:1rem;align-items:flex-start;overflow:hidden;min-width:0;}
+    .prop-num{background:var(--navy);color:var(--white);font-family:'Playfair Display',serif;font-weight:700;font-size:.85rem;min-width:32px;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+    .prop-body{min-width:0;flex:1;overflow:hidden;}
+    .prop-name{font-family:'Playfair Display',serif;font-weight:700;font-size:.95rem;color:var(--navy);margin-bottom:.35rem;}
+    .prop-desc{font-size:.85rem;color:var(--muted);margin-bottom:.3rem;line-height:1.55;}
+    .prop-example{overflow-x:auto;padding:.5rem .3rem .2rem;font-size:.93rem;}
+    .prop-example .katex-display{margin:.4rem 0 0;overflow-x:auto;}
+
+    /* ══════════ EPS-DELTA BLOCK ══════════ */
+    .epsdelta-proof{background:var(--accent-bg);border:1px solid var(--border);border-radius:4px;padding:1.4rem 1.8rem;margin-top:1.2rem;}
+    .epsdelta-title{font-family:'Playfair Display',serif;font-weight:700;color:var(--navy);font-size:1rem;margin-bottom:1rem;}
+    .epsdelta-step{background:var(--white);border-left:3px solid var(--navy);padding:.65rem 1rem;margin:.6rem 0;font-size:.90rem;border-radius:0 3px 3px 0;line-height:1.7;}
+    .epsdelta-step .step-tag{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);font-weight:700;display:block;margin-bottom:.2rem;}
+    .epsdelta-conclusion{background:linear-gradient(135deg,#eef4ff,#e8f4e8);border:1px solid #99bbee;border-radius:4px;padding:1rem 1.4rem;margin-top:1rem;font-size:.90rem;line-height:1.7;}
+
+    /* ══════════ SECTION STRUCTURE ══════════ */
+    .section-card{background:var(--white);border:1px solid var(--border);border-radius:3px;box-shadow:0 4px 28px rgba(0,59,117,0.09);overflow:hidden;margin-bottom:36px;animation:fadeUp 0.55s ease both;}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+    .section-header{background:var(--navy);color:var(--white);padding:13px 26px;display:flex;align-items:center;gap:14px;}
+    .section-number{background:var(--crimson);color:var(--white);font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .section-title{font-family:'Playfair Display',serif;font-size:1.02rem;font-weight:600;}
+    .section-body{padding:28px 32px 40px;}
+
+    /* ══════════ SECTION LABEL ══════════ */
+    .section-label-bar{font-family:'JetBrains Mono',monospace;font-size:0.70rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:1rem;margin-bottom:1rem;}
+    .section-label-bar::after{content:'';flex:1;height:1px;background:var(--gold);opacity:0.4;}
+
+    /* ══════════ HEADINGS ══════════ */
+    h2{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:700;color:var(--navy);margin-bottom:1.5rem;line-height:1.2;}
+    h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600;color:var(--navy);margin:1.8rem 0 0.8rem;}
+    h3.italic{font-weight:400;font-style:italic;color:var(--muted);}
+    p{margin-bottom:1rem;font-size:0.97rem;}
+
+    /* ══════════ MODEL BOX ══════════ */
+    .model-box{background:linear-gradient(135deg,#001d3d,var(--navy));color:var(--white);padding:2rem 2.5rem;border-radius:4px;margin:1.5rem 0;position:relative;overflow:hidden;}
+    .model-box::before{content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(200,114,26,.2),transparent);pointer-events:none;}
+    .model-box p{font-size:0.92rem;opacity:0.85;}
+    .model-box .katex{color:var(--amber-light);}
+    .model-box .katex-display{margin:0.8rem 0;}
+    .model-note{background:rgba(200,169,81,0.15);border-left:3px solid var(--gold);padding:0.8rem 1.2rem;margin-top:1rem;border-radius:0 2px 2px 0;font-size:0.85rem;color:rgba(255,255,255,0.85);}
+
+    /* ══════════ VAR LIST ══════════ */
+    .var-list{list-style:none;margin:1rem 0 1.5rem;}
+    .var-list li{display:flex;gap:1rem;align-items:baseline;padding:0.4rem 0;border-bottom:1px dashed var(--border);font-size:0.90rem;}
+    .var-list .var-sym{min-width:100px;font-family:'JetBrains Mono',monospace;color:var(--navy);font-size:0.83rem;font-weight:600;}
+
+    /* ══════════ KNOWLEDGE GRID ══════════ */
+    .knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem;margin-top:1.8rem;}
+    .k-card{background:var(--white);border:1px solid var(--border);border-top:3px solid var(--gold);border-radius:2px;overflow:hidden;transition:box-shadow .3s,transform .3s;}
+    .k-card:hover{box-shadow:0 8px 28px rgba(0,59,117,0.12);transform:translateY(-2px);}
+    .k-card-header{padding:1rem 1.2rem 0.6rem;}
+    .k-card-icon{font-size:1.4rem;margin-bottom:0.4rem;display:block;}
+    .k-card h4{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:0.3rem;}
+    .k-card .k-desc{font-size:0.85rem;color:var(--muted);margin:0;line-height:1.6;}
+    .k-card-sim{width:100%;height:120px;display:block;background:#080c12;}
+    .k-card-sim-label{font-family:'JetBrains Mono',monospace;font-size:0.63rem;letter-spacing:0.13em;text-transform:uppercase;color:var(--gold);padding:0.35rem 1rem;background:var(--accent-bg);border-top:1px solid var(--border);}
+
+    /* ══════════ ANIM SECTION (dark band) ══════════ */
+    .anim-band{background:#001225;padding:3rem 0;margin:0 -22px;}
+    .anim-band-inner{max-width:960px;margin:0 auto;padding:0 22px;}
+    .anim-band h2{color:var(--amber-light);}
+    .anim-band .section-label-bar{color:var(--gold);}
+    .anim-band .section-label-bar::after{background:var(--gold);}
+    .anim-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:2rem;}
+    @media(max-width:700px){.anim-grid{grid-template-columns:1fr;}}
+    .anim-card{background:rgba(245,243,238,.04);border:1px solid rgba(245,243,238,.1);border-radius:4px;overflow:hidden;}
+    .anim-card-title{padding:0.75rem 1.2rem 0.3rem;font-family:'JetBrains Mono',monospace;font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);}
+    canvas.scene3d{width:100%;height:240px;display:block;}
+    .param-panel{padding:0.8rem 1rem 0.9rem;display:grid;grid-template-columns:1fr 1fr;gap:0.5rem 0.9rem;background:rgba(0,0,0,.2);}
+    .param-row{display:flex;flex-direction:column;gap:0.12rem;}
+    .param-row label{font-family:'JetBrains Mono',monospace;font-size:0.60rem;letter-spacing:0.10em;text-transform:uppercase;color:rgba(245,243,238,.5);}
+    .pi-wrap{display:flex;align-items:center;gap:0.35rem;}
+    .pi-wrap input[type=number]{background:rgba(255,255,255,.08);border:1px solid rgba(245,243,238,.2);border-radius:3px;color:var(--amber-light);font-family:'JetBrains Mono',monospace;font-size:0.80rem;padding:.2rem .4rem;width:68px;}
+    .pi-wrap input[type=number]:focus{outline:none;border-color:var(--gold);}
+    .pi-wrap .unit{font-size:0.66rem;color:rgba(245,243,238,.4);font-family:'JetBrains Mono',monospace;}
+    .param-wide{grid-column:1/-1;}
+    .k-result{background:rgba(200,169,81,.1);border:1px solid rgba(200,169,81,.3);border-radius:3px;padding:0.4rem 0.7rem;font-family:'JetBrains Mono',monospace;font-size:0.74rem;color:var(--amber-light);line-height:1.5;word-break:break-all;}
+    .anim-btns{display:flex;gap:0.5rem;margin-top:0.2rem;}
+    .anim-btn{font-family:'JetBrains Mono',monospace;font-size:0.64rem;letter-spacing:0.08em;text-transform:uppercase;border:none;border-radius:3px;padding:0.33rem 0.75rem;cursor:pointer;transition:background .2s;}
+    .anim-btn.primary{background:var(--gold);color:var(--navy);}
+    .anim-btn.primary:hover{background:var(--amber-light);}
+    .anim-btn.secondary{background:rgba(245,243,238,.12);color:rgba(245,243,238,.7);}
+    .anim-btn.secondary:hover{background:rgba(245,243,238,.2);}
+    .anim-time{font-family:'JetBrains Mono',monospace;font-size:0.66rem;color:rgba(245,243,238,.5);text-align:center;padding:0.5rem 1rem 0.6rem;background:rgba(0,0,0,.15);}
+
+    /* ══════════ CHART / EXPLORER ══════════ */
+    .chart-outer{background:rgba(245,243,238,.04);border:1px solid rgba(245,243,238,.12);border-radius:4px;padding:1.8rem;margin-top:2rem;}
+    .chart-outer h3{color:var(--amber-light);font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;font-style:normal;margin-top:0;margin-bottom:0.5rem;}
+    .controls-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:1.2rem;margin-bottom:1.2rem;}
+    .control-group label{display:block;font-family:'JetBrains Mono',monospace;font-size:0.70rem;letter-spacing:0.13em;text-transform:uppercase;color:rgba(245,243,238,.6);margin-bottom:0.35rem;}
+    .control-group input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer;}
+    .control-group .val{font-family:'JetBrains Mono',monospace;font-size:0.83rem;color:var(--gold);font-weight:600;float:right;}
+    .chart-toolbar{display:flex;gap:0.45rem;margin-bottom:0.6rem;flex-wrap:wrap;}
+    .chart-btn{font-family:'JetBrains Mono',monospace;font-size:0.63rem;letter-spacing:0.08em;text-transform:uppercase;background:rgba(245,243,238,.07);border:1px solid rgba(245,243,238,.18);color:rgba(245,243,238,.7);border-radius:3px;padding:0.3rem 0.7rem;cursor:pointer;transition:all .2s;}
+    .chart-btn:hover,.chart-btn.active{background:var(--gold);border-color:var(--gold);color:var(--navy);}
+    .chart-wrap{position:relative;user-select:none;}
+    #chartCanvas{width:100%;height:360px;display:block;cursor:crosshair;}
+    .chart-hint{font-family:'JetBrains Mono',monospace;font-size:0.60rem;letter-spacing:0.07em;text-transform:uppercase;color:rgba(245,243,238,.3);text-align:center;margin-top:0.45rem;}
+    .tooltip-box{position:absolute;background:rgba(0,18,37,.95);border:1px solid var(--gold);border-radius:3px;padding:0.35rem 0.65rem;font-family:'JetBrains Mono',monospace;font-size:0.73rem;color:var(--amber-light);pointer-events:none;white-space:nowrap;display:none;z-index:10;}
+    .solution-box{background:rgba(200,169,81,.07);border:1px solid rgba(200,169,81,.25);border-radius:4px;padding:1rem 1.5rem;margin:1rem 0;}
+    .solution-box p{margin:0;font-family:'JetBrains Mono',monospace;font-size:0.83rem;color:var(--amber-light);}
+
+    /* ══════════ STEPS ══════════ */
+    .steps-container{margin-top:1.5rem;}
+    .step{display:grid;grid-template-columns:48px 1fr;gap:0 1.4rem;position:relative;}
+    .step:not(:last-child) .step-line{position:absolute;left:23px;top:48px;bottom:0;width:2px;background:linear-gradient(to bottom,var(--navy),rgba(0,59,117,.1));}
+    .step-num{width:48px;height:48px;border-radius:50%;background:var(--navy);color:var(--white);display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-size:0.8rem;font-weight:600;position:relative;z-index:1;align-self:start;}
+    .step-body{padding-bottom:2.2rem;}
+    .step-title{font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;color:var(--navy);margin-bottom:0.4rem;padding-top:0.6rem;}
+    .obs-box{background:var(--accent-bg);border:1px solid var(--border);border-left:3px solid var(--navy);padding:0.75rem 1rem;margin-top:0.7rem;border-radius:0 3px 3px 0;font-size:0.86rem;line-height:1.65;}
+    .obs-box strong{font-family:'JetBrains Mono',monospace;font-size:0.70rem;letter-spacing:0.09em;text-transform:uppercase;color:var(--navy);display:block;margin-bottom:0.25rem;}
+
+    /* ══════════ THEOREM ══════════ */
+    .theorem-box{border:2px solid var(--navy);padding:1.6rem 2rem;margin:1.8rem 0;border-radius:4px;position:relative;}
+    .theorem-box .theorem-label{position:absolute;top:-0.65rem;left:1.2rem;background:var(--light);padding:0 0.6rem;font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--navy);font-weight:600;}
+    .proof-step{background:var(--accent-bg);border-left:3px solid var(--navy);padding:0.7rem 1rem;margin:0.65rem 0;font-size:0.90rem;border-radius:0 3px 3px 0;}
+    .qed{text-align:right;font-family:'Playfair Display',serif;font-style:italic;color:var(--muted);margin-top:0.8rem;font-size:1.05rem;}
+
+    /* ══════════ DIVIDER ══════════ */
+    .divider{border:none;height:1px;background:linear-gradient(to right,transparent,var(--border),transparent);margin:2rem 0;}
+
+    /* ══════════ FOOTER ══════════ */
+    footer{text-align:center;padding:28px 22px;font-size:0.76rem;color:var(--muted);border-top:1px solid var(--border);letter-spacing:0.05em;line-height:2;}
+    footer strong{color:var(--navy);}
+
+    /* ══════════ REVEAL ══════════ */
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
+    .reveal.visible{opacity:1;transform:translateY(0);}
+
+    @media(max-width:640px){
+      header{grid-template-columns:60px 1fr 60px;padding:12px 14px;}
+      .header-center h1{font-size:0.72rem;}
+      main{padding:26px 12px 60px;}
+      .section-body{padding:18px 14px 26px;}
+      .anim-band{margin:0 -12px;}
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-wrap">
+    <img src="data:image/png;base64,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" alt="Logo SE²∂PEM" class="logo-seapem"/>
+  </div>
+  <div class="header-center">
+    <div class="seminar-label">IV Seminario Estudiantil de Ecuaciones Diferenciales y Educación Matemática</div>
+    <h1>Vinculación con el Medio para el Fortalecimiento de la Enseñanza y las Matemáticas Aplicadas</h1>
+    <div class="header-subtitle">Facultad de Ciencias &amp; Facultad de Educación y Humanidades<br>Universidad del Bío-Bío · Año 2026</div>
+  </div>
+  <div class="logo-wrap">
+    <img src="data:image/png;base64,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" alt="Escudo UBB"/>
+  </div>
+</header>
+
+<div class="page-title-banner">
+  <h1>Sesión Orientativa — <em>Recursos Didácticos</em></h1>
+  <div class="page-title-divider"></div>
+  <p class="page-title-professor">Prof. <span>Bastiani Calabrano Inostroza</span></p>
+</div>
+
+<main>
+
+  <!-- ═══════════ OBJETIVO ═══════════ -->
+  <div class="objetivo-box reveal">
+    <div class="objetivo-label">Objetivo de la Sesión</div>
+    <p class="objetivo-text">Comprender el concepto de <strong>límite en un punto</strong> por medio del análisis y reflexión de la <strong>Ley de Enfriamiento/Calentamiento de Newton</strong>, usando herramientas manuales y <strong>software educativo innovador</strong> para generar aprendizaje significativo de la <strong>Matemática Aplicada</strong>.</p>
+  </div>
+
+  <!-- ═══════════ SECCIÓN I ═══════════ -->
+  <div class="section-card" id="sec1">
+    <div class="section-header">
+      <div class="section-number">I</div>
+      <div class="section-title">El Modelo Matemático</div>
+    </div>
+    <div class="section-body">
+      <div class="reveal">
+        <p>La <strong>Ley de Enfriamiento/Calentamiento de Newton</strong> establece que la tasa de cambio de temperatura de un objeto es proporcional a la diferencia entre su temperatura $T(t)$ y la del entorno $T_m$:</p>
+        <div class="model-box">
+          <p style="margin-bottom:0.8rem;font-size:0.88rem;">Modelo — Ecuación Diferencial:</p>
+          $$\frac{dT}{dt} = k\big(T - T_m\big)$$
+          <p style="margin-top:0.8rem;font-size:0.88rem;">Condición inicial:</p>
+          $$T(0) = T_0$$
+          <div class="model-note"><strong>Nota:</strong> En esta sección presentamos el modelo sin resolverlo.</div>
+        </div>
+        <ul class="var-list">
+          <li><span class="var-sym">$T(t)$</span> Temperatura del objeto en el instante $t$</li>
+          <li><span class="var-sym">$T_m$</span> Temperatura del medio ambiente (constante)</li>
+          <li><span class="var-sym">$T_0$</span> Temperatura inicial del objeto: $T(0) = T_0$</li>
+          <li><span class="var-sym">$k$</span> Constante de proporcionalidad ($k&lt;0$ enfriamiento; $k&gt;0$ calentamiento)</li>
+          <li><span class="var-sym">$\dfrac{dT}{dt}$</span> Tasa de cambio de temperatura respecto al tiempo</li>
+        </ul>
+      </div>
+
+      <div class="reveal" style="transition-delay:.15s">
+        <h3>Conocimientos Previos Necesarios</h3>
+        <div class="knowledge-grid">
+          <div class="k-card">
+            <div class="k-card-header">
+              <span class="k-card-icon">🌡️</span>
+              <h4>Temperatura</h4>
+              <p class="k-desc">Magnitud física que mide el nivel de energía cinética promedio de las partículas. Determina la dirección del flujo de calor entre cuerpos.</p>
+            </div>
+            <canvas class="k-card-sim" id="sim-temp"></canvas>
+            <div class="k-card-sim-label">Energía cinética molecular</div>
+          </div>
+          <div class="k-card">
+            <div class="k-card-header">
+              <span class="k-card-icon">❄️</span>
+              <h4>Enfriamiento</h4>
+              <p class="k-desc">Proceso por el cual $T(t) &gt; T_m$: el objeto cede calor al entorno. La tasa de descenso decrece cuando la diferencia $T-T_m$ se reduce.</p>
+            </div>
+            <canvas class="k-card-sim" id="sim-cool"></canvas>
+            <div class="k-card-sim-label">Objeto cediendo calor al entorno</div>
+          </div>
+          <div class="k-card">
+            <div class="k-card-header">
+              <span class="k-card-icon">🔥</span>
+              <h4>Calentamiento</h4>
+              <p class="k-desc">Proceso por el cual $T(t) &lt; T_m$: el objeto absorbe calor del entorno. Mismo modelo con diferencia $T-T_m$ negativa.</p>
+            </div>
+            <canvas class="k-card-sim" id="sim-heat"></canvas>
+            <div class="k-card-sim-label">Objeto absorbiendo calor del entorno</div>
+          </div>
+          <div class="k-card">
+            <div class="k-card-header">
+              <span class="k-card-icon">🌿</span>
+              <h4>Temperatura Ambiente $T_m$</h4>
+              <p class="k-desc">Temperatura del medio que rodea al objeto, constante en el modelo. Es el valor de equilibrio al que converge el sistema.</p>
+            </div>
+            <canvas class="k-card-sim" id="sim-ambient"></canvas>
+            <div class="k-card-sim-label">Asíntota horizontal fija</div>
+          </div>
+          <div class="k-card">
+            <div class="k-card-header">
+              <span class="k-card-icon" style="font-size:1.2rem;letter-spacing:-1px;font-family:'JetBrains Mono',monospace;color:var(--navy);">←•→</span>
+              <h4>Límite en un Punto</h4>
+              <p class="k-desc">El límite $\lim_{t\to t^*} T(t)$ existe si y solo si los límites laterales coinciden: $\lim_{t\to t^{*-}} T(t) = \lim_{t\to t^{*+}} T(t)$.</p>
+            </div>
+            <canvas class="k-card-sim" id="sim-limit"></canvas>
+            <div class="k-card-sim-label">Límites laterales convergiendo al mismo punto</div>
+          </div>
+          <div class="k-card">
+            <div class="k-card-header">
+              <span class="k-card-icon">⚖️</span>
+              <h4>Equilibrio Térmico</h4>
+              <p class="k-desc">Estado donde $T = T_m$ y $\frac{dT}{dt}=0$. No hay flujo de calor. Es el estado límite del sistema cuando $t \to \infty$.</p>
+            </div>
+            <canvas class="k-card-sim" id="sim-equil"></canvas>
+            <div class="k-card-sim-label">Flujo de calor decayendo a cero</div>
+          </div>
+          <div class="k-card">
+            <div class="k-card-header">
+              <span class="k-card-icon">📐</span>
+              <h4>EDO Lineal de 1er Orden</h4>
+              <p class="k-desc">La ley de Newton es $\frac{dT}{dt} - kT = -kT_m$: lineal, coeficientes constantes, separable. Admite solución analítica exacta.</p>
+            </div>
+            <canvas class="k-card-sim" id="sim-ode"></canvas>
+            <div class="k-card-sim-label">Campo de direcciones de la EDO</div>
+          </div>
+          <div class="k-card">
+            <div class="k-card-header">
+              <span class="k-card-icon">🎯</span>
+              <h4>Problema de Valor Inicial</h4>
+              <p class="k-desc">La condición $T(0)=T_0$ selecciona una única curva solución de la familia $T_m+(T_0-T_m)e^{kt}$. La unicidad es garantizada por Picard.</p>
+            </div>
+            <canvas class="k-card-sim" id="sim-pvi"></canvas>
+            <div class="k-card-sim-label">Familia de soluciones y condición inicial</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- ═══════════ SECCIÓN II (dark band) ═══════════ -->
+  <div class="anim-band" id="sec2">
+    <div class="anim-band-inner">
+      <div class="section-label-bar">Sección II</div>
+      <h2>Visualización &amp; Solución Analítica</h2>
+
+      <div class="anim-grid reveal">
+        <!-- COFFEE -->
+        <div class="anim-card">
+          <div class="anim-card-title">☕ Café Enfriándose</div>
+          <canvas class="scene3d" id="coffeCanvas"></canvas>
+          <div class="param-panel">
+            <div class="param-row">
+              <label>T₀ — Temp. inicial</label>
+              <div class="pi-wrap"><input type="number" id="c_T0" value="95" min="30" max="200"><span class="unit">°C</span></div>
+            </div>
+            <div class="param-row">
+              <label>Tₘ — Temp. ambiente</label>
+              <div class="pi-wrap"><input type="number" id="c_Tm" value="22" min="-20" max="80"><span class="unit">°C</span></div>
+            </div>
+            <div class="param-row">
+              <label>T* — Temp. alcanzada</label>
+              <div class="pi-wrap"><input type="number" id="c_Tstar" value="60" min="1" max="199"><span class="unit">°C</span></div>
+            </div>
+            <div class="param-row">
+              <label>t* — En ese tiempo</label>
+              <div class="pi-wrap"><input type="number" id="c_tstar" value="10" min="1" max="300"><span class="unit">min</span></div>
+            </div>
+            <div class="param-row param-wide">
+              <div class="k-result" id="c_kresult">k = —</div>
+            </div>
+            <div class="param-row param-wide">
+              <div class="anim-btns">
+                <button class="anim-btn primary" id="c_apply">▶ Aplicar</button>
+                <button class="anim-btn secondary" id="c_pause">⏸ Pausar</button>
+                <button class="anim-btn secondary" id="c_reset">↺ Reiniciar</button>
+              </div>
+            </div>
+          </div>
+          <div class="anim-time" id="c_timeDisplay">t = 0.0 min &nbsp;|&nbsp; T(t) = — °C &nbsp;|&nbsp; Tₘ = — °C</div>
+        </div>
+
+        <!-- BREAD -->
+        <div class="anim-card">
+          <div class="anim-card-title">🍞 Pan Calentándose en el Horno</div>
+          <canvas class="scene3d" id="breadCanvas"></canvas>
+          <div class="param-panel">
+            <div class="param-row">
+              <label>T₀ — Temp. inicial</label>
+              <div class="pi-wrap"><input type="number" id="b_T0" value="22" min="-20" max="100"><span class="unit">°C</span></div>
+            </div>
+            <div class="param-row">
+              <label>Tₘ — Temp. del horno</label>
+              <div class="pi-wrap"><input type="number" id="b_Tm" value="220" min="50" max="500"><span class="unit">°C</span></div>
+            </div>
+            <div class="param-row">
+              <label>T* — Temp. alcanzada</label>
+              <div class="pi-wrap"><input type="number" id="b_Tstar" value="150" min="1" max="499"><span class="unit">°C</span></div>
+            </div>
+            <div class="param-row">
+              <label>t* — En ese tiempo</label>
+              <div class="pi-wrap"><input type="number" id="b_tstar" value="20" min="1" max="300"><span class="unit">min</span></div>
+            </div>
+            <div class="param-row param-wide">
+              <div class="k-result" id="b_kresult">k = —</div>
+            </div>
+            <div class="param-row param-wide">
+              <div class="anim-btns">
+                <button class="anim-btn primary" id="b_apply">▶ Aplicar</button>
+                <button class="anim-btn secondary" id="b_pause">⏸ Pausar</button>
+                <button class="anim-btn secondary" id="b_reset">↺ Reiniciar</button>
+              </div>
+            </div>
+          </div>
+          <div class="anim-time" id="b_timeDisplay">t = 0.0 min &nbsp;|&nbsp; T(t) = — °C &nbsp;|&nbsp; Tₘ = — °C</div>
+        </div>
+      </div>
+
+      <!-- SOLUCIÓN ANALÍTICA -->
+      <div class="reveal" style="transition-delay:.1s;margin-top:2.5rem;">
+        <h3 class="italic" style="color:var(--amber-light);font-style:normal;font-weight:700;font-size:1.05rem;">Solución Analítica</h3>
+        <div class="model-box">
+          <p style="opacity:.8;font-size:.88rem;margin-bottom:.7rem;">Solución general:</p>
+          $$T(t) = T_m + (T_0 - T_m)\,e^{kt}$$
+          <p style="opacity:.8;font-size:.88rem;margin:0.9rem 0 .5rem;">Determinación de $k$ a partir de una condición $T(t^*)=T^*$:</p>
+          $$k = \frac{1}{t^*}\ln\!\left(\frac{T^* - T_m}{T_0 - T_m}\right)$$
+          <p style="opacity:.8;font-size:.88rem;margin:0.9rem 0 .5rem;">Límite al infinito ($k &lt; 0$):</p>
+          $$\lim_{t \to +\infty} T(t) = T_m + (T_0 - T_m)\cdot \underbrace{\lim_{t\to\infty} e^{kt}}_{=\,0} = T_m$$
+        </div>
+      </div>
+
+      <!-- EXPLORADOR INTERACTIVO -->
+      <div class="reveal chart-outer" style="transition-delay:.2s;">
+        <h3>Explorador Interactivo</h3>
+        <p style="opacity:.75;font-size:.88rem;color:rgba(245,243,238,.7);">Varía los parámetros. Usa rueda para <strong>zoom</strong>, arrastra para <strong>desplazar</strong>, y mueve el cursor para <strong>inspeccionar la curva</strong>.</p>
+        <div class="controls-grid">
+          <div class="control-group">
+            <label>$T_0$ — Temp. inicial<span class="val" id="v_T0">90°</span></label>
+            <input type="range" id="sl_T0" min="0" max="200" value="90" step="1">
+          </div>
+          <div class="control-group">
+            <label>$T_m$ — Temp. ambiente<span class="val" id="v_Tm">20°</span></label>
+            <input type="range" id="sl_Tm" min="-20" max="300" value="20" step="1">
+          </div>
+          <div class="control-group">
+            <label>$k$ — Constante<span class="val" id="v_k">-0.05</span></label>
+            <input type="range" id="sl_k" min="-0.3" max="0.3" value="-0.08" step="0.005">
+          </div>
+          <div class="control-group">
+            <label>$t_{max}$ — Tiempo máx.<span class="val" id="v_tmax">100</span></label>
+            <input type="range" id="sl_tmax" min="10" max="120" value="60" step="5">
+          </div>
+        </div>
+        <div class="chart-toolbar">
+          <button class="chart-btn" id="btn-zoomin">＋ Zoom In</button>
+          <button class="chart-btn" id="btn-zoomout">－ Zoom Out</button>
+          <button class="chart-btn" id="btn-reset-view">⟳ Reset Vista</button>
+          <button class="chart-btn active" id="btn-pin">📍 Pin Activo</button>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="chartCanvas"></canvas>
+          <div class="tooltip-box" id="chartTooltip"></div>
+        </div>
+        <div class="chart-hint">Rueda = zoom · Arrastra = desplazar · Hover = inspeccionar</div>
+
+        <!-- ── t* selector ── -->
+        <div class="tstar-row">
+          <span class="tstar-label">Seleccionar $t^*$ para analizar límites:</span>
+          <input type="range" id="sl_tstar" min="1" max="59" value="20" step="1" style="flex:1;accent-color:var(--crimson);cursor:pointer;">
+          <span class="tstar-badge" id="tstar-badge">t* = 20</span>
+          <button class="chart-btn active" id="btn-analyze" style="white-space:nowrap;">📐 Analizar límites</button>
+        </div>
+        <div class="solution-box">
+          <p id="sol_display"></p>
+        </div>
+
+        <!-- ── LÍMITES LATERALES PANEL ── -->
+        <div id="lateral-panel" style="margin-top:1.4rem;display:none;">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-bottom:1rem;">
+            <div class="lateral-card" id="lc-left">
+              <div class="lateral-label">Límite por la izquierda</div>
+              <div class="lateral-math" id="ll-math"></div>
+              <div class="lateral-val" id="ll-val"></div>
+            </div>
+            <div class="lateral-card" id="lc-right">
+              <div class="lateral-label">Límite por la derecha</div>
+              <div class="lateral-math" id="lr-math"></div>
+              <div class="lateral-val" id="lr-val"></div>
+            </div>
+            <div class="lateral-card highlight" id="lc-result">
+              <div class="lateral-label">Límite en el punto</div>
+              <div class="lateral-math" id="lres-math"></div>
+              <div class="lateral-val" id="lres-val"></div>
+            </div>
+          </div>
+          <div class="lateral-conclusion" id="lateral-conclusion"></div>
+          <!-- mini canvas for approach animation -->
+          <canvas id="approachCanvas" style="width:100%;height:140px;display:block;background:#080c12;border-radius:3px;margin-top:0.8rem;"></canvas>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- ═══════════ SECCIÓN II.B: PROPIEDADES Y ε-δ ═══════════ -->
+  <div class="section-card" id="sec-props">
+    <div class="section-header">
+      <div class="section-number" style="font-size:0.85rem;">II.B</div>
+      <div class="section-title">Propiedades del Límite en un Punto aplicadas a $T(t)$</div>
+    </div>
+    <div class="section-body">
+
+      <div class="reveal">
+        <p>Dado que $T(t) = T_m + (T_0 - T_m)\,e^{kt}$ es una función <strong>continua</strong> en todo $\mathbb{R}$, podemos aplicar directamente las propiedades de límite.</p>
+
+        <div class="prop-grid">
+          <div class="prop-card">
+            <div class="prop-num">P1</div>
+            <div class="prop-body">
+              <div class="prop-name">Sustitución Directa</div>
+              <p class="prop-desc">Si $f$ es continua en $t^*$, entonces $\lim_{t\to t^*} f(t) = f(t^*)$. Dado que $T$ es continua:</p>
+              <div class="prop-example">$\displaystyle\lim_{t\to t^*} T(t) = T(t^*) = T_m + (T_0-T_m)\,e^{kt^*}$</div>
+            </div>
+          </div>
+          <div class="prop-card">
+            <div class="prop-num">P2</div>
+            <div class="prop-body">
+              <div class="prop-name">Límite de la Suma</div>
+              <p class="prop-desc">$\lim(f+g) = \lim f + \lim g$, aplicado a $T_m + (T_0-T_m)e^{kt}$:</p>
+              <div class="prop-example">$\displaystyle\lim_{t\to t^*} T(t) = T_m + (T_0-T_m)\lim_{t\to t^*}e^{kt}$</div>
+            </div>
+          </div>
+          <div class="prop-card">
+            <div class="prop-num">P3</div>
+            <div class="prop-body">
+              <div class="prop-name">Límite de la Exponencial</div>
+              <p class="prop-desc">La función $e^{kt}$ es continua, luego el límite se evalúa por sustitución directa:</p>
+              <div class="prop-example">$\displaystyle\lim_{t\to t^*} e^{kt} = e^{kt^*}$</div>
+            </div>
+          </div>
+          <div class="prop-card">
+            <div class="prop-num">P4</div>
+            <div class="prop-body">
+              <div class="prop-name">Igualdad de Límites Laterales</div>
+              <p class="prop-desc">El límite existe si y solo si ambos límites laterales son iguales:</p>
+              <div class="prop-example">$\displaystyle\lim_{t\to t^{*-}} T(t) = \lim_{t\to t^{*+}} T(t) = T(t^*)$</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal" style="transition-delay:.15s;margin-top:2.5rem;">
+        <h3>Demostración Formal: Definición $\varepsilon$-$\delta$</h3>
+
+        <div class="obs-box" style="margin-bottom:1.5rem;">
+          <strong>⚠ Observación</strong>El valor de $t^*$ utilizado en esta demostración fue seleccionado en el Explorador Interactivo de la sección anterior. Interactúa con la gráfica para ver cómo cambia la demostración en tiempo real.
+        </div>
+
+        <div class="model-box" style="background:linear-gradient(135deg,#001d3d,#002a55);">
+          <p style="opacity:.8;font-size:.88rem;margin-bottom:.8rem;"><strong style="color:var(--gold);">Definición ε-δ:</strong></p>
+          $$\lim_{t\to t^*} T(t) = L \iff \forall\,\varepsilon>0,\;\exists\,\delta>0 \text{ tal que } 0<|t-t^*|<\delta \implies |T(t)-L|<\varepsilon$$
+        </div>
+
+        <div id="epsdelta-block">
+          <div class="obs-box" style="border-color:var(--gold);background:rgba(200,169,81,.07);">
+            <strong>📍 Selecciona un punto</strong>Haz click en la gráfica del Explorador Interactivo para ver la demostración ε-δ con los valores concretos.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- ═══════════ SECCIÓN III ═══════════ -->
+  <div class="section-card" id="sec3">
+    <div class="section-header">
+      <div class="section-number">III</div>
+      <div class="section-title">Resolución Paso a Paso</div>
+    </div>
+    <div class="section-body">
+      <div class="steps-container reveal">
+        <div class="step"><div class="step-line"></div><div class="step-num">01</div>
+          <div class="step-body">
+            <div class="step-title">Planteamiento del Problema de Valor Inicial</div>
+            <p>Partimos del modelo:</p>$$\frac{dT}{dt} = k(T - T_m), \quad T(0) = T_0$$
+            <div class="obs-box"><strong>Observación</strong>EDO de primer orden, <em>lineal</em>, coeficientes constantes y separable.</div>
+          </div>
+        </div>
+        <div class="step"><div class="step-line"></div><div class="step-num">02</div>
+          <div class="step-body">
+            <div class="step-title">Separación de Variables</div>
+            $$\frac{dT}{T - T_m} = k\,dt$$
+            <div class="obs-box"><strong>Observación</strong>Válido siempre que $T \neq T_m$ (es decir, $T - T_m \neq 0$). Si $T = T_m$ para todo $t$, la solución trivial satisface la ecuación.</div>
+          </div>
+        </div>
+        <div class="step"><div class="step-line"></div><div class="step-num">03</div>
+          <div class="step-body">
+            <div class="step-title">Integración de Ambos Miembros</div>
+            $$\int \frac{dT}{T - T_m} = \int k\,dt \implies \ln|T - T_m| = kt + C_1, \quad C_1 \in \mathbb{R}$$
+            <div class="obs-box"><strong>Observación — Integral Logarítmica</strong>Se usa $\int \frac{du}{u} = \ln|u| + C$ con $u = T - T_m$. La constante $C_1$ recoge la condición inicial.</div>
+          </div>
+        </div>
+        <div class="step"><div class="step-line"></div><div class="step-num">04</div>
+          <div class="step-body">
+            <div class="step-title">Exponenciación para Despejar $T$</div>
+            $$|T - T_m| = e^{C_1}\cdot e^{kt} \implies T - T_m = C\,e^{kt} \implies T(t) = T_m + C\,e^{kt}$$
+            <div class="obs-box"><strong>Observación — Solución General</strong>Familia uniparamétrica de soluciones. La condición inicial seleccionará el único $C$.</div>
+          </div>
+        </div>
+        <div class="step"><div class="step-line"></div><div class="step-num">05</div>
+          <div class="step-body">
+            <div class="step-title">Aplicación de la Condición Inicial</div>
+            $$T(0) = T_m + C = T_0 \implies C = T_0 - T_m$$
+            <div class="obs-box"><strong>Observación</strong>La condición inicial determina unívocamente $C$. La unicidad es garantizada por Picard-Lindelöf.</div>
+          </div>
+        </div>
+        <div class="step"><div class="step-line"></div><div class="step-num">06</div>
+          <div class="step-body">
+            <div class="step-title">Solución Particular y Límite al Infinito</div>
+            $$\boxed{T(t) = T_m + (T_0 - T_m)\,e^{kt}}$$
+            $$\lim_{t\to+\infty} T(t) = T_m + (T_0 - T_m)\cdot 0 = T_m \quad (k &lt; 0)$$
+            <div class="obs-box"><strong>Observación — Asíntota Horizontal</strong>La recta $T = T_m$ es asíntota horizontal: el objeto alcanza el equilibrio térmico asintóticamente.</div>
+          </div>
+        </div>
+        <div class="step"><div class="step-num">07</div>
+          <div class="step-body">
+            <div class="step-title">Verificación de la Solución</div>
+            $$\frac{dT}{dt} = k(T_0 - T_m)e^{kt} = k\bigl(T(t) - T_m\bigr) \checkmark$$
+            <div class="obs-box"><strong>Observación</strong>Ambos lados son iguales para cualquier $k$, $T_m$, $T_0$, confirmando la solución.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal" style="transition-delay:.15s;margin-top:3rem;">
+        <h3 style="font-size:1.3rem;font-style:normal;font-weight:700;color:var(--navy);">Existencia y Unicidad de la Solución</h3>
+        <p>El PVI es: $\dfrac{dT}{dt} = f(t,T)$ con $f(t,T)=k(T-T_m)$, $\;T(0)=T_0$.</p>
+        <div class="theorem-box">
+          <span class="theorem-label">Teorema de Picard-Lindelöf</span>
+          <p>Sea $f:D\subset\mathbb{R}^2\to\mathbb{R}$ continua en $D\ni(t_0,T_0)$ y Lipschitz continua en $T$. Entonces el PVI tiene <strong>existencia y unicidad local</strong> de solución.</p>
+        </div>
+        <div class="proof-step"><strong>1. Continuidad:</strong> $f(t,T)=k(T-T_m)$ es lineal en $T$, por tanto $f\in C(\mathbb{R}^2)$. ✓</div>
+        <div class="proof-step"><strong>2. Condición de Lipschitz en $T$:</strong> $|f(t,T_1)-f(t,T_2)|=|k|\,|T_1-T_2|$. Constante $L=|k|&lt;\infty$. ✓</div>
+        <div class="proof-step"><strong>3. Existencia global:</strong> $f$ es Lipschitz en todo $\mathbb{R}$, la solución existe en $[0,+\infty)$. ✓</div>
+        <div class="proof-step"><strong>4. Unicidad:</strong> Sean $T_1,T_2$ dos soluciones. $u=T_1-T_2$ satisface $\dot u=ku$, $u(0)=0$, luego $u\equiv 0$. ✓</div>
+        <div class="theorem-box" style="border-color:var(--success);margin-top:1.8rem;">
+          <span class="theorem-label" style="color:var(--success);background:var(--light);">Conclusión</span>
+          <p>El PVI $\dfrac{dT}{dt}=k(T-T_m)$, $T(0)=T_0$ tiene <strong>exactamente una solución</strong> en $[0,+\infty)$:</p>
+          $$T(t) = T_m + (T_0 - T_m)\,e^{kt}$$
+        </div>
+        <div class="qed">∎</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <strong>SE²∂PEM</strong> · Recurso Educativo · Ecuaciones Diferenciales · Ley de Enfriamiento de Newton<br>
+  <strong>Facultad de Ciencias &amp; Facultad de Educación y Humanidades</strong><br>
+  Universidad del Bío-Bío · Año 2026
+</footer>
+
+<script>
+/* ─── SCROLL REVEAL ─── */
+const _io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');_io.unobserve(e.target);}}),{threshold:.08});
+document.querySelectorAll('.reveal').forEach(r=>_io.observe(r));
+
+
+/* ─── SCROLL REVEAL ─── */
+/* ═══════════════════════════════
+   CARD MINI-SIMULATIONS
+═══════════════════════════════ */
+window.addEventListener('load',function(){
+  const DPR=Math.min(devicePixelRatio,2);
+  function setup(id){
+    const c=document.getElementById(id);
+    if(!c)return null;
+    c.width=c.offsetWidth*DPR; c.height=c.offsetHeight*DPR;
+    return {c,ctx:c.getContext('2d'),W:c.width,H:c.height};
+  }
+
+  /* SIM 1: Temperatura — partículas con velocidad variable */
+  (function(){
+    const s=setup('sim-temp');if(!s)return;
+    const{ctx,W,H}=s;
+    const parts=Array.from({length:20},()=>({
+      x:W*(.1+Math.random()*.8),y:H*(.1+Math.random()*.8),
+      vx:(Math.random()-.5)*3,vy:(Math.random()-.5)*3,
+      r:W*.025+Math.random()*W*.012,hue:20+Math.random()*40
+    }));
+    let t=0;
+    (function draw(){
+      ctx.fillStyle='rgba(10,7,4,.35)';ctx.fillRect(0,0,W,H);
+      const spd=0.5+1.5*((Math.sin(t*.012)+1)/2);
+      parts.forEach(p=>{
+        p.x+=p.vx*spd;p.y+=p.vy*spd;
+        if(p.x<p.r||p.x>W-p.r)p.vx*=-1;
+        if(p.y<p.r||p.y>H-p.r)p.vy*=-1;
+        const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*2);
+        g.addColorStop(0,`hsla(${p.hue+spd*10},90%,70%,.9)`);
+        g.addColorStop(1,`hsla(${p.hue},80%,40%,0)`);
+        ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle=g;ctx.fill();
+      });
+      const tmp=Math.round(20+spd*80);
+      ctx.font=`bold ${H*.22}px 'JetBrains Mono',monospace`;
+      ctx.fillStyle=`hsla(${30+spd*20},90%,65%,.9)`;
+      ctx.textAlign='center';ctx.fillText(tmp+'°',W/2,H*.72);
+      t++;requestAnimationFrame(draw);
+    })();
+  })();
+
+  /* SIM 2: Enfriamiento — bola se enfría */
+  (function(){
+    const s=setup('sim-cool');if(!s)return;
+    const{ctx,W,H}=s;
+    let t=0;const T0=90,Tm=20,k=-.025;
+    const Tf=t2=>Tm+(T0-Tm)*Math.exp(k*t2);
+    (function draw(){
+      ctx.fillStyle='rgba(6,8,14,.4)';ctx.fillRect(0,0,W,H);
+      const tmp=Tf(t);const p=Math.max(0,(tmp-Tm)/(T0-Tm));
+      const cx=W/2,cy=H*.5,r=H*.27;
+      const g=ctx.createRadialGradient(cx-r*.3,cy-r*.3,r*.1,cx,cy,r);
+      const rv=Math.round(50+p*180),gv=Math.round(80+p*60);
+      g.addColorStop(0,`rgb(${Math.min(255,rv+60)},${gv},50)`);
+      g.addColorStop(1,`rgb(${rv},${Math.max(20,gv-40)},10)`);
+      ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
+      if(p>.08){for(let i=0;i<3;i++){
+        const sx=cx+(i-1)*W*.1+Math.sin(t*.08+i)*W*.04;
+        const sy=cy-r-(((t*.5+i*20)%60)/60)*H*.4;
+        const a=(1-((t*.5+i*20)%60)/60)*p*.6;
+        ctx.beginPath();ctx.arc(sx,sy,W*.018,0,Math.PI*2);
+        ctx.fillStyle=`rgba(200,180,160,${a})`;ctx.fill();
+      }}
+      ctx.font=`bold ${H*.2}px 'JetBrains Mono',monospace`;
+      ctx.fillStyle=`rgb(${rv+40},${gv+20},80)`;
+      ctx.textAlign='center';ctx.fillText(tmp.toFixed(0)+'°',W/2,H*.92);
+      t+=.4;if(t>200)t=0;requestAnimationFrame(draw);
+    })();
+  })();
+
+  /* SIM 3: Calentamiento — bola se calienta */
+  (function(){
+    const s=setup('sim-heat');if(!s)return;
+    const{ctx,W,H}=s;
+    let t=0;const T0=15,Tm=100,k=.03;
+    const Tf=t2=>Tm+(T0-Tm)*Math.exp(-k*t2);
+    (function draw(){
+      ctx.fillStyle='rgba(6,8,14,.4)';ctx.fillRect(0,0,W,H);
+      const tmp=Tf(t);const p=Math.max(0,(tmp-T0)/(Tm-T0));
+      const cx=W/2,cy=H*.5,r=H*.27;
+      const g=ctx.createRadialGradient(cx-r*.3,cy-r*.3,r*.1,cx,cy,r);
+      const bl=Math.round(180-p*130),rv=Math.round(30+p*200);
+      g.addColorStop(0,`rgb(${rv},${Math.round(60+p*30)},${bl})`);
+      g.addColorStop(1,`rgb(${Math.max(20,rv-60)},20,${Math.max(10,bl-60)})`);
+      ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
+      if(p>.3){
+        const gl=ctx.createRadialGradient(cx,cy,r*.8,cx,cy,r*1.6);
+        gl.addColorStop(0,`rgba(255,${Math.round(100+p*100)},0,${p*.3})`);
+        gl.addColorStop(1,'transparent');
+        ctx.beginPath();ctx.arc(cx,cy,r*1.6,0,Math.PI*2);ctx.fillStyle=gl;ctx.fill();
+      }
+      ctx.font=`bold ${H*.2}px 'JetBrains Mono',monospace`;
+      ctx.fillStyle=`rgb(${rv+60},${Math.round(60+p*80)},${bl+40})`;
+      ctx.textAlign='center';ctx.fillText(tmp.toFixed(0)+'°',W/2,H*.92);
+      t+=.4;if(t>180)t=0;requestAnimationFrame(draw);
+    })();
+  })();
+
+  /* SIM 4: Temperatura Ambiente — línea Tm fija mientras curva converge */
+  (function(){
+    const s=setup('sim-ambient');if(!s)return;
+    const{ctx,W,H}=s;
+    let t=0;
+    const Tm=25,T0=80,k=-.02,tmax=200;
+    const Tf=tv=>Tm+(T0-Tm)*Math.exp(k*tv);
+    const pd={l:28,r:8,t:8,b:18};
+    const pw=W-pd.l-pd.r,ph=H-pd.t-pd.b;
+    const minT=Tm-8,maxT=T0+8;
+    const mx=tv=>pd.l+(tv/tmax)*pw;
+    const my=tv=>pd.t+(1-(tv-minT)/(maxT-minT))*ph;
+    (function draw(){
+      ctx.fillStyle='rgba(8,12,18,.45)';ctx.fillRect(0,0,W,H);
+      ctx.setLineDash([4,3]);ctx.strokeStyle='rgba(90,200,120,.7)';ctx.lineWidth=1.5;
+      ctx.beginPath();ctx.moveTo(pd.l,my(Tm));ctx.lineTo(pd.l+pw,my(Tm));ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.font=`${H*.1}px 'JetBrains Mono',monospace`;
+      ctx.fillStyle='rgba(90,200,120,.9)';ctx.textAlign='left';
+      ctx.fillText('Tₘ='+Tm+'°',pd.l+3,my(Tm)-4);
+      const tc=Math.min(t,tmax);
+      ctx.beginPath();
+      for(let i=0;i<=100;i++){
+        const ti=(i/100)*tc;const x=mx(ti),y=my(Tf(ti));
+        i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+      }
+      ctx.strokeStyle='#e8a44a';ctx.lineWidth=2;ctx.stroke();
+      const curT=Tf(tc);
+      ctx.beginPath();ctx.arc(mx(tc),my(curT),4,0,Math.PI*2);
+      ctx.fillStyle='#e8a44a';ctx.fill();
+      t+=.5;if(t>tmax+20)t=0;requestAnimationFrame(draw);
+    })();
+  })();
+
+  /* SIM 5: Límite en un punto — dos puntos acercándose por izquierda y derecha */
+  (function(){
+    const s=setup('sim-limit');if(!s)return;
+    const{ctx,W,H}=s;
+    let t=0;
+    const Tm=22,T0=90,k=-.03,tstar=25,tmax=60;
+    const Tf=tv=>Tm+(T0-Tm)*Math.exp(k*tv);
+    const pd={l:28,r:10,t:12,b:18};
+    const pw=W-pd.l-pd.r,ph=H-pd.t-pd.b;
+    const minT=Tm-5,maxT=T0+5;
+    const mx=tv=>pd.l+(tv/tmax)*pw;
+    const my=tv=>pd.t+(1-(tv-minT)/(maxT-minT))*ph;
+    const Tlim=Tf(tstar);
+    (function draw(){
+      ctx.fillStyle='rgba(8,12,18,.5)';ctx.fillRect(0,0,W,H);
+      // full curve
+      ctx.beginPath();
+      for(let i=0;i<=100;i++){const ti=(i/100)*tmax;ctx.lineTo(mx(ti),my(Tf(ti)));}
+      ctx.strokeStyle='rgba(200,169,81,.35)';ctx.lineWidth=1.5;ctx.stroke();
+      // vertical dashed line at tstar
+      ctx.setLineDash([3,3]);ctx.strokeStyle='rgba(255,255,255,.25)';ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(mx(tstar),pd.t);ctx.lineTo(mx(tstar),pd.t+ph);ctx.stroke();
+      ctx.setLineDash([]);
+      // oscillating offset for left/right dots
+      const phase=(t%120)/120;
+      const offset=Math.max(0.3,(1-phase)*12+0.3);
+      const tL=tstar-offset,tR=tstar+offset;
+      const yL=Tf(tL),yR=Tf(Math.min(tR,tmax));
+      // left approach line
+      ctx.beginPath();ctx.moveTo(mx(tL),my(yL));ctx.lineTo(mx(tstar),my(Tlim));
+      ctx.strokeStyle='rgba(74,127,168,.7)';ctx.lineWidth=1.5;ctx.stroke();
+      // right approach line
+      ctx.beginPath();ctx.moveTo(mx(Math.min(tR,tmax)),my(yR));ctx.lineTo(mx(tstar),my(Tlim));
+      ctx.strokeStyle='rgba(200,80,80,.7)';ctx.lineWidth=1.5;ctx.stroke();
+      // dot left
+      ctx.beginPath();ctx.arc(mx(tL),my(yL),4,0,Math.PI*2);
+      ctx.fillStyle='#4a7fa8';ctx.fill();
+      // dot right
+      ctx.beginPath();ctx.arc(mx(Math.min(tR,tmax)),my(yR),4,0,Math.PI*2);
+      ctx.fillStyle='#c85050';ctx.fill();
+      // limit point
+      ctx.beginPath();ctx.arc(mx(tstar),my(Tlim),5,0,Math.PI*2);
+      ctx.fillStyle=offset<0.5?'#e8c97a':'rgba(232,201,122,.4)';ctx.fill();
+      // labels
+      ctx.font=`${H*.09}px 'JetBrains Mono',monospace`;
+      ctx.fillStyle='rgba(74,127,168,.9)';ctx.textAlign='right';
+      ctx.fillText('t→t*⁻',mx(tL)-5,my(yL)-5);
+      ctx.fillStyle='rgba(200,80,80,.9)';ctx.textAlign='left';
+      ctx.fillText('t→t*⁺',mx(Math.min(tR,tmax))+5,my(yR)-5);
+      ctx.fillStyle='rgba(232,201,122,.9)';ctx.textAlign='center';
+      ctx.fillText('t*='+tstar,mx(tstar),pd.t+ph+14);
+      t++;requestAnimationFrame(draw);
+    })();
+  })();
+  /* SIM 6: Equilibrio — flecha de flujo que decrece */
+  (function(){
+    const s=setup('sim-equil');if(!s)return;
+    const{ctx,W,H}=s;
+    let t=0;const T0=100,Tm=50,k=-.025;
+    const Tf=tv=>Tm+(T0-Tm)*Math.exp(k*tv);
+    (function draw(){
+      ctx.fillStyle='#060810';ctx.fillRect(0,0,W,H);
+      const tmp=Tf(t);const p=Math.max(0,(tmp-Tm)/(T0-Tm));
+      const cx=W*.28,cy=H*.52,r=H*.22;
+      const g=ctx.createRadialGradient(cx,cy,0,cx,cy,r);
+      g.addColorStop(0,`rgb(${Math.round(50+p*180)},${Math.round(80+p*40)},50)`);
+      g.addColorStop(1,`rgba(0,0,0,0)`);
+      ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
+      ctx.beginPath();ctx.arc(cx,cy,r*.85,0,Math.PI*2);
+      ctx.fillStyle=`rgb(${Math.round(50+p*150)},${Math.round(60+p*30)},40)`;ctx.fill();
+      const ex=W*.74,ey=H*.52,er=H*.18;
+      ctx.beginPath();ctx.arc(ex,ey,er,0,Math.PI*2);
+      ctx.fillStyle='rgba(60,160,100,.6)';ctx.fill();
+      ctx.font=`${H*.12}px 'JetBrains Mono',monospace`;
+      ctx.fillStyle='rgba(245,240,232,.95)';ctx.textAlign='center';
+      ctx.fillText(tmp.toFixed(0)+'°',cx,cy+H*.05);
+      ctx.fillStyle='rgba(90,200,120,.95)';
+      ctx.fillText(Tm+'°',ex,ey+H*.05);
+      const arLen=p*W*.25;
+      if(arLen>3){
+        const ax=cx+r*.9,ay=cy;
+        ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(ax+arLen,ay);
+        ctx.strokeStyle=`rgba(232,164,74,${.4+p*.5})`;ctx.lineWidth=2.5;ctx.stroke();
+        ctx.beginPath();ctx.moveTo(ax+arLen,ay-5);ctx.lineTo(ax+arLen+8,ay);ctx.lineTo(ax+arLen,ay+5);
+        ctx.fillStyle=`rgba(232,164,74,${.4+p*.5})`;ctx.fill();
+      }
+      ctx.font=`${H*.1}px 'JetBrains Mono',monospace`;
+      ctx.fillStyle='rgba(232,164,74,.7)';ctx.textAlign='center';
+      ctx.fillText('ΔT='+Math.max(0,tmp-Tm).toFixed(1)+'°',W/2,H*.93);
+      t+=.4;if(t>200)t=0;requestAnimationFrame(draw);
+    })();
+  })();
+
+  /* SIM 7: Campo de direcciones */
+  (function(){
+    const s=setup('sim-ode');if(!s)return;
+    const{ctx,W,H}=s;
+    let t=0;const Tm=50,k=-.04,tmax=100,minT=5,maxT=110;
+    const rows=10,cols2=14;
+    const pd={l:14,r:8,t:8,b:14};
+    const pw=W-pd.l-pd.r,ph=H-pd.t-pd.b;
+    const mx=tv=>pd.l+(tv/tmax)*pw;
+    const my=tv=>pd.t+(1-(tv-minT)/(maxT-minT))*ph;
+    (function draw(){
+      ctx.fillStyle='rgba(8,12,18,.5)';ctx.fillRect(0,0,W,H);
+      for(let ri=0;ri<=rows;ri++){
+        for(let ci=0;ci<=cols2;ci++){
+          const tv=(ci/cols2)*tmax,Tv=minT+(ri/rows)*(maxT-minT);
+          const slope=k*(Tv-Tm);
+          const nx=mx(tv),ny=my(Tv),len=W*.024;
+          const angle=Math.atan2(-slope*(ph/(maxT-minT)),pw/tmax);
+          ctx.save();ctx.translate(nx,ny);ctx.rotate(angle);
+          ctx.beginPath();ctx.moveTo(-len,0);ctx.lineTo(len,0);
+          const sat=Math.min(1,Math.abs(slope)/3);
+          ctx.strokeStyle=`rgba(${200+sat*50},${150-sat*80},50,.55)`;
+          ctx.lineWidth=1;ctx.stroke();ctx.restore();
+        }
+      }
+      ctx.setLineDash([3,3]);ctx.strokeStyle='rgba(90,200,120,.6)';ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(pd.l,my(Tm));ctx.lineTo(pd.l+pw,my(Tm));ctx.stroke();
+      ctx.setLineDash([]);
+      const tc=Math.min(t,tmax);
+      ctx.beginPath();
+      for(let i=0;i<=80;i++){
+        const ti=(i/80)*tc,Tv=Tm+(80-Tm)*Math.exp(k*ti);
+        const x=mx(ti),y=my(Tv);
+        i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+      }
+      ctx.strokeStyle='#e8a44a';ctx.lineWidth=2;ctx.stroke();
+      t+=.4;if(t>tmax+15)t=0;requestAnimationFrame(draw);
+    })();
+  })();
+
+  /* SIM 8: Familia de soluciones PVI */
+  (function(){
+    const s=setup('sim-pvi');if(!s)return;
+    const{ctx,W,H}=s;
+    let t=0;const Tm=50,k=-.025,T0sel=80,tmax=150;
+    const Cvs=[-60,-30,0,30,60];
+    const pd={l:22,r:8,t:8,b:14};
+    const pw=W-pd.l-pd.r,ph=H-pd.t-pd.b;
+    const mn=Tm-75,mx2=Tm+85;
+    const fx=tv=>pd.l+(tv/tmax)*pw;
+    const fy=tv=>pd.t+(1-(tv-mn)/(mx2-mn))*ph;
+    const Tf=(C,tv)=>Tm+C*Math.exp(k*tv);
+    (function draw(){
+      ctx.fillStyle='rgba(8,12,18,.45)';ctx.fillRect(0,0,W,H);
+      ctx.setLineDash([3,3]);ctx.strokeStyle='rgba(90,200,120,.5)';ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(pd.l,fy(Tm));ctx.lineTo(pd.l+pw,fy(Tm));ctx.stroke();
+      ctx.setLineDash([]);
+      const tc=Math.min(t,tmax);
+      Cvs.forEach((C,i)=>{
+        const sel=C===T0sel-Tm;
+        ctx.globalAlpha=sel?1:.25;
+        ctx.beginPath();
+        for(let j=0;j<=80;j++){
+          const ti=(j/80)*tc;const x=fx(ti),y=fy(Tf(C,ti));
+          j===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+        }
+        ctx.strokeStyle=sel?'#e8a44a':'rgba(200,160,80,.8)';
+        ctx.lineWidth=sel?2.5:1.2;ctx.stroke();
+      });
+      ctx.globalAlpha=1;
+      ctx.beginPath();ctx.arc(fx(0),fy(T0sel),5,0,Math.PI*2);
+      ctx.fillStyle='#e8a44a';ctx.fill();
+      ctx.font=`${H*.11}px 'JetBrains Mono',monospace`;
+      ctx.fillStyle='rgba(232,164,74,.9)';ctx.textAlign='left';
+      ctx.fillText('T₀='+T0sel+'°',fx(0)+6,fy(T0sel)-5);
+      const curT=Tf(T0sel-Tm,tc);
+      ctx.beginPath();ctx.arc(fx(tc),fy(curT),4,0,Math.PI*2);
+      ctx.fillStyle='#e8a44a';ctx.fill();
+      t+=.4;if(t>tmax+20)t=0;requestAnimationFrame(draw);
+    })();
+  })();
+});
+
+/* ═══════════════════════════════════════════
+   COFFEE & BREAD SCENES
+═══════════════════════════════════════════ */
+window.addEventListener('load',function(){
+  function makeScene(canvasId,isCoffee){
+    const canvas=document.getElementById(canvasId);
+    const ctx=canvas.getContext('2d');
+    const px=isCoffee?'c':'b';
+    let params={T0:isCoffee?95:22,Tm:isCoffee?22:220,k:isCoffee?-.025:.018};
+    let realSec=0,lastTS=null,simTime=0;
+
+    function resize(){canvas.width=canvas.offsetWidth*Math.min(devicePixelRatio,2);canvas.height=canvas.offsetHeight*Math.min(devicePixelRatio,2);}
+    resize();window.addEventListener('resize',resize);
+
+    function Tfn(t){return params.Tm+(params.T0-params.Tm)*Math.exp(params.k*t);}
+    function lerp(a,b,t){return a+(b-a)*t;}
+
+    function calcK(){
+      const T0=+document.getElementById(px+'_T0').value;
+      const Tm=+document.getElementById(px+'_Tm').value;
+      const Ts=+document.getElementById(px+'_Tstar').value;
+      const ts=+document.getElementById(px+'_tstar').value;
+      if(Math.abs(T0-Tm)<.001)return null;
+      const ratio=(Ts-Tm)/(T0-Tm);
+      if(ratio<=0)return null;
+      return Math.log(ratio)/ts;
+    }
+
+    function updateK(){
+      const k=calcK();const el=document.getElementById(px+'_kresult');
+      if(k===null){
+        el.textContent='k = inválido — revisa los valores';
+        el.style.borderColor='rgba(180,50,30,.5)';
+      } else {
+        const T0=+document.getElementById(px+'_T0').value;
+        const Tm=+document.getElementById(px+'_Tm').value;
+        el.textContent=`k = ${k.toFixed(5)} min⁻¹\nT(t) = ${Tm} + (${T0}−${Tm})·e^(${k.toFixed(4)}·t)`;
+        el.style.borderColor='rgba(200,114,26,.3)';
+      }
+    }
+
+    function drawCoffee(W,H,temp){
+      const p=Math.max(0,Math.min(1,(temp-params.Tm)/(params.T0-params.Tm)));
+      const bg=ctx.createLinearGradient(0,0,0,H);
+      bg.addColorStop(0,'#0d0a08');bg.addColorStop(1,'#1a120a');
+      ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+      const cx=W/2,tY=H*.78;
+      ctx.beginPath();ctx.ellipse(cx,tY,W*.42,H*.07,0,0,Math.PI*2);ctx.fillStyle='#2d1f14';ctx.fill();
+      ctx.beginPath();ctx.ellipse(cx,tY-H*.01,W*.2,H*.04,0,0,Math.PI*2);
+      const sg=ctx.createRadialGradient(cx,tY,0,cx,tY,W*.2);
+      sg.addColorStop(0,'#5a3d28');sg.addColorStop(1,'#3a2518');ctx.fillStyle=sg;ctx.fill();
+      const cW=W*.14,cH=H*.28,cX=cx-W*.07,cY=tY-H*.07-cH;
+      ctx.beginPath();ctx.ellipse(cx+W*.02,tY+H*.01,W*.12,H*.025,.2,0,Math.PI*2);ctx.fillStyle='rgba(0,0,0,.4)';ctx.fill();
+      ctx.beginPath();ctx.moveTo(cX,cY);ctx.lineTo(cX+W*.012,cY+cH);ctx.lineTo(cX+cW-W*.012,cY+cH);ctx.lineTo(cX+cW,cY);
+      const cg=ctx.createLinearGradient(cX,0,cX+cW,0);
+      cg.addColorStop(0,'#6b4530');cg.addColorStop(.5,'#8a5a3a');cg.addColorStop(1,'#4a2f1e');
+      ctx.fillStyle=cg;ctx.fill();ctx.strokeStyle='#3a2010';ctx.lineWidth=1;ctx.stroke();
+      ctx.beginPath();ctx.ellipse(cx,cY,cW/2,H*.03,0,0,Math.PI*2);ctx.fillStyle='#5a3820';ctx.fill();
+      const cofY=cY+H*.015;
+      ctx.beginPath();ctx.ellipse(cx,cofY,cW/2*.88,H*.025,0,0,Math.PI*2);
+      const r2=Math.round(lerp(80,210,p)),g2=Math.round(lerp(100,80,p)),b2=Math.round(lerp(140,20,p));
+      ctx.fillStyle=`rgb(${r2},${g2},${b2})`;ctx.fill();
+      if(p>.05){
+        for(let i=0;i<Math.floor(1+p*3);i++){
+          const sx=cx+(i-1.5)*W*.05+Math.sin(simTime*.05+i)*W*.02;
+          const sy=cofY-((simTime*.8+i*30)%100)/100*H*.35;
+          const al=(1-((simTime*.8+i*30)%100)/100)*p*.6;
+          ctx.beginPath();ctx.arc(sx,sy,W*.012,0,Math.PI*2);
+          ctx.fillStyle=`rgba(200,180,160,${al})`;ctx.fill();
+        }
+      }
+      ctx.beginPath();ctx.arc(cX+cW+W*.03,cY+cH*.45,H*.06,-Math.PI*.6,Math.PI*.6);
+      ctx.strokeStyle='#7a4a30';ctx.lineWidth=W*.015;ctx.stroke();
+      // Tm label
+      ctx.font=`${H*.04}px 'JetBrains Mono',monospace`;
+      ctx.fillStyle='rgba(90,200,120,.9)';ctx.textAlign='left';
+      ctx.fillText('Tₘ = '+params.Tm.toFixed(0)+'°C (ambiente)',W*.03,H*.94);
+      // Current temp
+      ctx.font=`bold ${H*.09}px 'JetBrains Mono',monospace`;
+      ctx.fillStyle=`rgb(${r2+60},${g2+20},${b2+60})`;
+      ctx.textAlign='center';ctx.fillText(temp.toFixed(1)+'°',cx,H*.13);
+      ctx.font=`${H*.04}px 'Source Serif 4',serif`;
+      ctx.fillStyle='rgba(245,240,232,.5)';ctx.fillText('T(t)',cx,H*.2);
+    }
+
+    function drawBread(W,H,temp){
+      const p=Math.max(0,Math.min(1,(temp-params.T0)/(params.Tm-params.T0)));
+      const bg=ctx.createRadialGradient(W/2,H/2,H*.1,W/2,H/2,H*.7);
+      const ht=Math.round(p*70);
+      bg.addColorStop(0,`rgb(${60+ht},${20+ht/3},10)`);bg.addColorStop(1,`rgb(${20+ht/2},10,8)`);
+      ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+      const wg=ctx.createLinearGradient(0,0,W,0);
+      wg.addColorStop(0,`rgba(255,${80+p*100},20,${.2+p*.3})`);wg.addColorStop(.5,'transparent');
+      wg.addColorStop(1,`rgba(255,${80+p*100},20,${.2+p*.3})`);ctx.fillStyle=wg;ctx.fillRect(0,0,W,H);
+      for(let i=0;i<6;i++){
+        const cx2=W*(.1+i*.14);
+        ctx.beginPath();ctx.arc(cx2,H*.08,W*.025,0,Math.PI*2);
+        const cg=ctx.createRadialGradient(cx2,H*.08,0,cx2,H*.08,W*.05);
+        cg.addColorStop(0,`rgba(255,${200-p*100},50,${p})`);cg.addColorStop(.5,`rgba(200,80,10,${p*.6})`);cg.addColorStop(1,'transparent');
+        ctx.fillStyle=cg;ctx.fill();
+      }
+      const rY=H*.62;
+      ctx.strokeStyle='rgba(180,160,140,.7)';ctx.lineWidth=H*.008;
+      for(let i=0;i<8;i++){const rx=W*(.08+i*.12);ctx.beginPath();ctx.moveTo(rx,rY-H*.01);ctx.lineTo(rx,rY+H*.01);ctx.stroke();}
+      ctx.beginPath();ctx.moveTo(W*.08,rY);ctx.lineTo(W*.92,rY);ctx.strokeStyle='rgba(180,160,140,.5)';ctx.lineWidth=H*.012;ctx.stroke();
+      const bx=W/2,by=rY-H*.12,bW=W*.38,bH=H*.22;
+      ctx.beginPath();ctx.ellipse(bx,rY+H*.005,bW*.5,H*.03,0,0,Math.PI*2);ctx.fillStyle='rgba(0,0,0,.4)';ctx.fill();
+      ctx.beginPath();ctx.ellipse(bx,by,bW/2,bH/2,0,0,Math.PI*2);
+      const r3=Math.round(210+p*20),g3=Math.round(180-p*80),b3=Math.round(120-p*100);
+      const bg2=ctx.createRadialGradient(bx-bW*.1,by-bH*.15,0,bx,by,bW*.5);
+      bg2.addColorStop(0,`rgb(${Math.min(255,r3+30)},${g3+20},${Math.max(20,b3+20)})`);
+      bg2.addColorStop(.6,`rgb(${r3},${g3},${Math.max(10,b3)})`);
+      bg2.addColorStop(1,`rgb(${Math.max(80,r3-60)},${Math.max(30,g3-60)},${Math.max(5,b3-40)})`);
+      ctx.fillStyle=bg2;ctx.fill();
+      ctx.strokeStyle=`rgba(${Math.max(60,r3-80)},${Math.max(20,g3-60)},${Math.max(5,b3-40)},.8)`;ctx.lineWidth=2;
+      for(let i=-1;i<=1;i++){ctx.beginPath();ctx.moveTo(bx+i*bW*.2,by-bH*.3);ctx.quadraticCurveTo(bx+i*bW*.22+bW*.05,by,bx+i*bW*.2,by+bH*.3);ctx.stroke();}
+      if(p>.3){for(let i=0;i<4;i++){
+        const sx=bx+(i-2)*W*.06+Math.sin(simTime*.08+i)*W*.02;
+        const sy=by-bH*.4-((simTime*.6+i*25)%80)/80*H*.3;
+        const al=(1-((simTime*.6+i*25)%80)/80)*p*.4;
+        ctx.beginPath();ctx.arc(sx,sy,W*.015,0,Math.PI*2);ctx.fillStyle=`rgba(255,180,60,${al})`;ctx.fill();
+      }}
+      ctx.font=`${H*.04}px 'JetBrains Mono',monospace`;
+      ctx.fillStyle='rgba(90,200,120,.9)';ctx.textAlign='left';
+      ctx.fillText('Tₘ = '+params.Tm.toFixed(0)+'°C (horno)',W*.03,H*.94);
+      ctx.font=`bold ${H*.09}px 'JetBrains Mono',monospace`;
+      const tc=`rgb(255,${Math.round(200-p*100)},${Math.round(100-p*80)})`;
+      ctx.fillStyle=tc;ctx.textAlign='center';ctx.fillText(temp.toFixed(1)+'°',W/2,H*.13);
+      ctx.font=`${H*.04}px 'Source Serif 4',serif`;
+      ctx.fillStyle='rgba(245,240,232,.5)';ctx.fillText('T(t)',W/2,H*.2);
+    }
+
+    let isPaused = false;
+
+    function animate(ts){
+      if(isPaused){lastTS=null;return;}
+      if(lastTS===null)lastTS=ts;
+      const dt=(ts-lastTS)/1000;lastTS=ts;
+      realSec+=dt;
+      simTime=realSec*.5;
+      const W=canvas.width,H=canvas.height;
+      ctx.clearRect(0,0,W,H);
+      const tmp=Tfn(simTime);
+      isCoffee?drawCoffee(W,H,tmp):drawBread(W,H,tmp);
+      const el=document.getElementById(px+'_timeDisplay');
+      el.textContent=`t = ${simTime.toFixed(1)} min  |  T(t) = ${tmp.toFixed(1)} °C  |  Tₘ = ${params.Tm.toFixed(0)} °C`;
+      if(Math.abs(tmp-params.Tm)<.4){realSec=0;lastTS=null;}
+      requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+
+    document.getElementById(px+'_apply').addEventListener('click',()=>{
+      const k=calcK();if(k===null){updateK();return;}
+      params={T0:+document.getElementById(px+'_T0').value,Tm:+document.getElementById(px+'_Tm').value,k};
+      realSec=0;lastTS=null;isPaused=false;
+      const pb=document.getElementById(px+'_pause');
+      pb.textContent='⏸ Pausar';pb.classList.remove('primary');pb.classList.add('secondary');
+      updateK();
+    });
+    document.getElementById(px+'_pause').addEventListener('click',()=>{
+      isPaused=!isPaused;
+      const pb=document.getElementById(px+'_pause');
+      if(isPaused){pb.textContent='▶ Reanudar';pb.classList.add('primary');pb.classList.remove('secondary');}
+      else{pb.textContent='⏸ Pausar';pb.classList.remove('primary');pb.classList.add('secondary');lastTS=null;requestAnimationFrame(animate);}
+    });
+    document.getElementById(px+'_reset').addEventListener('click',()=>{
+      realSec=0;lastTS=null;isPaused=false;
+      const pb=document.getElementById(px+'_pause');
+      pb.textContent='⏸ Pausar';pb.classList.remove('primary');pb.classList.add('secondary');
+      requestAnimationFrame(animate);
+    });
+    [px+'_T0',px+'_Tm',px+'_Tstar',px+'_tstar'].forEach(id=>document.getElementById(id).addEventListener('input',updateK));
+    updateK();
+  }
+  makeScene('coffeCanvas',true);
+  makeScene('breadCanvas',false);
+});
+
+/* ═══════════════════════════════════════════
+   INTERACTIVE CHART — Zoom / Pan / Hover / Pin
+═══════════════════════════════════════════ */
+(function(){
+  const canvas=document.getElementById('chartCanvas');
+  const ctx=canvas.getContext('2d');
+  const tooltip=document.getElementById('chartTooltip');
+  const DPR=Math.min(devicePixelRatio,2);
+
+  let view={xMin:0,xMax:100};
+  let isDragging=false,dragStartX=0,dragViewStart={xMin:0,xMax:0};
+  let hoverPt=null,pinnedPt=null,pinMode=true;
+  let mouseXY={x:0,y:0};
+
+  const pad={l:62,r:20,t:22,b:46};
+
+  function getP(){return{T0:+document.getElementById('sl_T0').value,Tm:+document.getElementById('sl_Tm').value,k:+document.getElementById('sl_k').value,tmax:+document.getElementById('sl_tmax').value};}
+  function Tfn(t,p){return p.Tm+(p.T0-p.Tm)*Math.exp(p.k*t);}
+
+  function resize(){canvas.width=canvas.offsetWidth*DPR;canvas.height=canvas.offsetHeight*DPR;draw();}
+  window.addEventListener('resize',resize);
+
+  function plotArea(){const W=canvas.width,H=canvas.height;return{W,H,pw:W-pad.l-pad.r,ph:H-pad.t-pad.b};}
+
+  function getYRange(p){
+    let mn=Infinity,mx=-Infinity;
+    for(let i=0;i<=300;i++){
+      const t=view.xMin+(i/300)*(view.xMax-view.xMin);
+      const v=Tfn(t,p);if(v<mn)mn=v;if(v>mx)mx=v;
+    }
+    mn=Math.min(mn,p.Tm)-8;mx=Math.max(mx,p.Tm)+8;
+    const rng=mx-mn;mn-=rng*.04;mx+=rng*.04;
+    return{yMin:mn,yMax:mx};
+  }
+
+  function d2c(t,T,yMin,yMax){
+    const{pw,ph}=plotArea();
+    return{x:pad.l+(t-view.xMin)/(view.xMax-view.xMin)*pw,y:pad.t+(1-(T-yMin)/(yMax-yMin))*ph};
+  }
+  function c2d(cx,yMin,yMax){
+    const{pw}=plotArea();
+    return view.xMin+((cx-pad.l)/pw)*(view.xMax-view.xMin);
+  }
+
+  function draw(){
+    if(!canvas.offsetWidth)return;
+    const p=getP();const{yMin,yMax}=getYRange(p);const{W,H,pw,ph}=plotArea();
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle='rgba(8,12,18,1)';ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='rgba(15,20,30,.5)';ctx.fillRect(pad.l,pad.t,pw,ph);
+
+    // Grid
+    ctx.strokeStyle='rgba(245,240,232,.07)';ctx.lineWidth=1;ctx.setLineDash([]);
+    const nX=6,nY=6;
+    for(let i=0;i<=nX;i++){
+      const x=pad.l+(i/nX)*pw;
+      ctx.beginPath();ctx.moveTo(x,pad.t);ctx.lineTo(x,pad.t+ph);ctx.stroke();
+      const tv=view.xMin+(i/nX)*(view.xMax-view.xMin);
+      ctx.fillStyle='rgba(245,240,232,.45)';ctx.font=`${Math.max(10,H*.028)}px 'JetBrains Mono',monospace`;
+      ctx.textAlign='center';ctx.fillText(tv.toFixed(1),x,pad.t+ph+18);
+    }
+    for(let i=0;i<=nY;i++){
+      const y=pad.t+(i/nY)*ph;
+      ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+pw,y);ctx.stroke();
+      const Tv=yMax-(i/nY)*(yMax-yMin);
+      ctx.fillStyle='rgba(245,240,232,.45)';ctx.textAlign='right';
+      ctx.fillText(Tv.toFixed(1)+'°',pad.l-6,y+4);
+    }
+    ctx.fillStyle='rgba(245,240,232,.4)';ctx.font=`${Math.max(10,H*.03)}px 'JetBrains Mono',monospace`;
+    ctx.textAlign='center';ctx.fillText('t (tiempo)',pad.l+pw/2,pad.t+ph+38);
+    ctx.save();ctx.translate(15,pad.t+ph/2);ctx.rotate(-Math.PI/2);
+    ctx.fillText('T(t) °C',0,0);ctx.restore();
+
+    ctx.save();ctx.beginPath();ctx.rect(pad.l,pad.t,pw,ph);ctx.clip();
+
+    // Tm asymptote
+    const tmY=d2c(0,p.Tm,yMin,yMax).y;
+    ctx.setLineDash([6,4]);ctx.strokeStyle='rgba(90,200,130,.7)';ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.moveTo(pad.l,tmY);ctx.lineTo(pad.l+pw,tmY);ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Curve
+    const grd=ctx.createLinearGradient(pad.l,0,pad.l+pw,0);
+    grd.addColorStop(0,'#e8a44a');grd.addColorStop(1,'#4a7fa8');
+    ctx.strokeStyle=grd;ctx.lineWidth=2.5;
+    ctx.beginPath();
+    let first=true;
+    for(let i=0;i<=500;i++){
+      const t=view.xMin+(i/500)*(view.xMax-view.xMin);
+      const{x,y}=d2c(t,Tfn(t,p),yMin,yMax);
+      first?ctx.moveTo(x,y):ctx.lineTo(x,y);first=false;
+    }
+    ctx.stroke();
+
+    // Start dot
+    const sp=d2c(0,p.T0,yMin,yMax);
+    if(sp.x>=pad.l&&sp.x<=pad.l+pw){ctx.beginPath();ctx.arc(sp.x,sp.y,5,0,Math.PI*2);ctx.fillStyle='#e8a44a';ctx.fill();}
+
+    // Hover crosshair
+    if(hoverPt){
+      const{x,y}=d2c(hoverPt.t,hoverPt.Tv,yMin,yMax);
+      ctx.strokeStyle='rgba(245,240,232,.25)';ctx.lineWidth=1;ctx.setLineDash([3,3]);
+      ctx.beginPath();ctx.moveTo(x,pad.t);ctx.lineTo(x,pad.t+ph);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+pw,y);ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.beginPath();ctx.arc(x,y,5,0,Math.PI*2);
+      ctx.fillStyle='rgba(245,240,232,.9)';ctx.fill();
+      ctx.strokeStyle='rgba(200,114,26,.8)';ctx.lineWidth=1.5;ctx.stroke();
+    }
+
+    // Pinned point (t* marker)
+    if(pinnedPt){
+      const pTv=Tfn(pinnedPt.t,p);
+      const{x,y}=d2c(pinnedPt.t,pTv,yMin,yMax);
+      // vertical crimson line
+      ctx.strokeStyle='rgba(155,24,69,.8)';ctx.lineWidth=1.5;ctx.setLineDash([4,3]);
+      ctx.beginPath();ctx.moveTo(x,pad.t);ctx.lineTo(x,pad.t+ph);ctx.stroke();
+      ctx.setLineDash([]);
+      // left approach dot (blue)
+      const tL=Math.max(0,pinnedPt.t-3);
+      const{x:xL,y:yL}=d2c(tL,Tfn(tL,p),yMin,yMax);
+      ctx.beginPath();ctx.arc(xL,yL,5,0,Math.PI*2);ctx.fillStyle='#4a7fa8';ctx.fill();
+      // right approach dot (red)
+      const tR=Math.min(p.tmax,pinnedPt.t+3);
+      const{x:xR,y:yR}=d2c(tR,Tfn(tR,p),yMin,yMax);
+      ctx.beginPath();ctx.arc(xR,yR,5,0,Math.PI*2);ctx.fillStyle='#c85050';ctx.fill();
+      // limit dot (gold)
+      ctx.beginPath();ctx.arc(x,y,7,0,Math.PI*2);ctx.fillStyle='rgba(200,114,26,.95)';ctx.fill();
+      ctx.strokeStyle='#e8a44a';ctx.lineWidth=2;ctx.stroke();
+      // label
+      ctx.font=`${Math.max(10,H*.03)}px 'JetBrains Mono',monospace`;
+      ctx.fillStyle='#e8a44a';ctx.textAlign='left';
+      const lx=Math.min(x+10,pad.l+pw-90);
+      ctx.fillText(`t*=${pinnedPt.t.toFixed(1)} | T=${pTv.toFixed(1)}°`,lx,y-10);
+    }
+
+    ctx.restore();
+
+    // Tm label
+    if(tmY>pad.t&&tmY<pad.t+ph){
+      ctx.fillStyle='rgba(90,200,130,.9)';ctx.font=`${Math.max(10,H*.03)}px 'JetBrains Mono',monospace`;
+      ctx.textAlign='left';ctx.fillText('Tₘ='+p.Tm.toFixed(0)+'°',pad.l+4,tmY-5);
+    }
+    ctx.strokeStyle='rgba(245,240,232,.2)';ctx.lineWidth=1;ctx.strokeRect(pad.l,pad.t,pw,ph);
+  }
+
+  function canvasXY(e){
+    const rect=canvas.getBoundingClientRect();
+    return{cx:(e.clientX-rect.left)*(canvas.width/rect.width),cy:(e.clientY-rect.top)*(canvas.height/rect.height)};
+  }
+  function inPlot(cx,cy){const{pw,ph}=plotArea();return cx>=pad.l&&cx<=pad.l+pw&&cy>=pad.t&&cy<=pad.t+ph;}
+
+  function showTooltip(t,Tv,pinned){
+    const rect=canvas.getBoundingClientRect();
+    const rx=mouseXY.clientX-rect.left,ry=mouseXY.clientY-rect.top;
+    tooltip.style.left=(rx+16)+'px';tooltip.style.top=(ry-36)+'px';
+    tooltip.innerHTML=`t = ${t.toFixed(3)} &nbsp;|&nbsp; T = ${Tv.toFixed(3)}°${pinned?' 📍':''}`;
+    tooltip.style.display='block';
+  }
+
+  canvas.addEventListener('mousemove',e=>{
+    mouseXY=e;
+    const{cx,cy}=canvasXY(e);
+    if(!inPlot(cx,cy)){hoverPt=null;tooltip.style.display='none';if(isDragging)isDragging=false;draw();return;}
+    if(isDragging){
+      const p=getP();const{yMin,yMax}=getYRange(p);
+      const tCur=c2d(cx,yMin,yMax);
+      const tStart=c2d(dragStartX,yMin,yMax);
+      const delta=tStart-tCur;
+      const span=dragViewStart.xMax-dragViewStart.xMin;
+      view.xMin=dragViewStart.xMin+delta;
+      view.xMax=view.xMin+span;
+    }
+    const p=getP();const{yMin,yMax}=getYRange(p);
+    const t=c2d(cx,yMin,yMax);
+    const Tv=Tfn(t,p);
+    hoverPt={t,Tv};
+    showTooltip(t,Tv,false);
+    draw();
+  });
+
+  canvas.addEventListener('mousedown',e=>{
+    const{cx,cy}=canvasXY(e);
+    if(!inPlot(cx,cy))return;
+    isDragging=true;dragStartX=cx;
+    dragViewStart={xMin:view.xMin,xMax:view.xMax};
+    canvas.style.cursor='grabbing';
+  });
+
+  canvas.addEventListener('mouseup',e=>{
+    const wasDrag=isDragging;isDragging=false;canvas.style.cursor='crosshair';
+    if(!wasDrag&&pinMode&&hoverPt){
+      pinnedPt={t:hoverPt.t};
+      const p=getP();showTooltip(pinnedPt.t,Tfn(pinnedPt.t,p),true);
+      updateLateralPanel(pinnedPt.t, Tfn(pinnedPt.t,p), p);
+      draw();
+    }
+  });
+
+  canvas.addEventListener('mouseleave',()=>{isDragging=false;hoverPt=null;tooltip.style.display='none';canvas.style.cursor='crosshair';draw();});
+
+  canvas.addEventListener('wheel',e=>{
+    e.preventDefault();
+    const{cx}=canvasXY(e);
+    const p=getP();const{yMin,yMax}=getYRange(p);
+    const tM=c2d(cx,yMin,yMax);
+    const factor=e.deltaY>0?1.25:.8;
+    const span=(view.xMax-view.xMin)*factor;
+    const frac=(tM-view.xMin)/(view.xMax-view.xMin);
+    view.xMin=tM-frac*span;view.xMax=view.xMin+span;
+    if(view.xMax-view.xMin<0.5)view.xMax=view.xMin+0.5;
+    if(view.xMax-view.xMin>200){view.xMin=0;view.xMax=200;}
+    draw();
+  },{passive:false});
+
+  // Touch
+  let touches2={},pinchDist=null;
+  canvas.addEventListener('touchstart',e=>{
+    e.preventDefault();
+    Array.from(e.changedTouches).forEach(t=>{touches2[t.identifier]=t;});
+    const tvs=Object.values(touches2);
+    if(tvs.length===1){dragStartX=canvasXY(tvs[0]).cx;dragViewStart={xMin:view.xMin,xMax:view.xMax};isDragging=true;}
+  },{passive:false});
+  canvas.addEventListener('touchmove',e=>{
+    e.preventDefault();
+    Array.from(e.changedTouches).forEach(t=>{touches2[t.identifier]=t;});
+    const tvs=Object.values(touches2);
+    const p=getP();const{yMin,yMax}=getYRange(p);
+    if(tvs.length>=2){
+      const ax=canvasXY(tvs[0]).cx,bx=canvasXY(tvs[1]).cx;
+      const d=Math.abs(ax-bx);
+      if(pinchDist!==null){
+        const f=pinchDist/d;const mid=(ax+bx)/2;
+        const tM=c2d(mid,yMin,yMax);const span=(view.xMax-view.xMin)*f;
+        const frac=(tM-view.xMin)/(view.xMax-view.xMin);
+        view.xMin=tM-frac*span;view.xMax=view.xMin+span;
+        if(view.xMax-view.xMin<0.5)view.xMax=view.xMin+0.5;draw();
+      }
+      pinchDist=d;
+    } else if(tvs.length===1&&isDragging){
+      const cx=canvasXY(tvs[0]).cx;
+      const tC=c2d(cx,yMin,yMax),tS=c2d(dragStartX,yMin,yMax);
+      const span=dragViewStart.xMax-dragViewStart.xMin;
+      view.xMin=dragViewStart.xMin+(tS-tC);view.xMax=view.xMin+span;draw();
+    }
+  },{passive:false});
+  canvas.addEventListener('touchend',e=>{
+    Array.from(e.changedTouches).forEach(t=>{delete touches2[t.identifier];});
+    if(Object.keys(touches2).length<2)pinchDist=null;
+    if(Object.keys(touches2).length===0)isDragging=false;
+  });
+
+  document.getElementById('btn-zoomin').addEventListener('click',()=>{
+    const m=(view.xMin+view.xMax)/2,s=(view.xMax-view.xMin)*.6;
+    view.xMin=m-s/2;view.xMax=m+s/2;if(view.xMax-view.xMin<0.5)view.xMax=view.xMin+0.5;draw();
+  });
+  document.getElementById('btn-zoomout').addEventListener('click',()=>{
+    const m=(view.xMin+view.xMax)/2,s=(view.xMax-view.xMin)*1.65;
+    view.xMin=m-s/2;view.xMax=m+s/2;draw();
+  });
+  document.getElementById('btn-reset-view').addEventListener('click',()=>{
+    const p=getP();view.xMin=0;view.xMax=p.tmax;pinnedPt=null;hoverPt=null;tooltip.style.display='none';draw();
+  });
+  document.getElementById('btn-pin').addEventListener('click',()=>{
+    pinMode=!pinMode;
+    const btn=document.getElementById('btn-pin');
+    btn.classList.toggle('active',pinMode);
+    btn.textContent=pinMode?'📍 Pin Activo':'📍 Pin Off';
+    if(!pinMode){pinnedPt=null;draw();}
+  });
+
+  function updateLabels(){
+    const p=getP();
+    document.getElementById('v_T0').textContent=p.T0+'°';
+    document.getElementById('v_Tm').textContent=p.Tm+'°';
+    document.getElementById('v_k').textContent=p.k.toFixed(3);
+    document.getElementById('v_tmax').textContent=p.tmax;
+    // keep tstar slider max in sync with tmax
+    const slTs = document.getElementById('sl_tstar');
+    const curTs = +slTs.value;
+    slTs.max = p.tmax - 1;
+    if(curTs >= p.tmax) slTs.value = Math.max(1, p.tmax - 5);
+    document.getElementById('tstar-badge').textContent = 't* = ' + slTs.value;
+    document.getElementById('sol_display').innerHTML=
+      `T(t) = ${p.Tm} + (${p.T0} − ${p.Tm})·e<sup>${p.k.toFixed(3)}·t</sup> &nbsp;&nbsp;|&nbsp;&nbsp; lim<sub>t→∞</sub> T(t) = ${p.Tm}°`;
+    draw();
+  }
+  ['sl_T0','sl_Tm','sl_k','sl_tmax'].forEach(id=>document.getElementById(id).addEventListener('input',updateLabels));
+
+  // t* slider live badge update
+  document.getElementById('sl_tstar').addEventListener('input', function(){
+    document.getElementById('tstar-badge').textContent = 't* = ' + this.value;
+    // draw vertical marker on chart
+    const p = getP();
+    pinnedPt = {t: +this.value};
+    draw();
+  });
+
+  // Analyze button
+  document.getElementById('btn-analyze').addEventListener('click', function(){
+    const p    = getP();
+    const ts   = +document.getElementById('sl_tstar').value;
+    const Lval = Tfn_global(ts, p);
+    pinnedPt   = {t: ts};
+    draw();
+    updateLateralPanel(ts, Lval, p);
+    // Scroll smoothly to lateral panel
+    setTimeout(()=>{
+      document.getElementById('lateral-panel').scrollIntoView({behavior:'smooth', block:'start'});
+    }, 200);
+  });
+
+  resize();updateLabels();
+})();
+
+/* ══════════════════════════════════════════════════════
+   LATERAL LIMITS PANEL + APPROACH ANIMATION + ε-δ PROOF
+══════════════════════════════════════════════════════ */
+let approachRAF = null;
+
+function Tfn_global(t, p){ return p.Tm + (p.T0 - p.Tm) * Math.exp(p.k * t); }
+
+function updateLateralPanel(tstar, Lval, p){
+  const panel = document.getElementById('lateral-panel');
+  panel.style.display = 'block';
+
+  const fmt = v => v.toFixed(4);
+  const ts  = tstar.toFixed(3);
+  const Ls  = fmt(Lval);
+
+  // Left card
+  document.getElementById('ll-math').textContent = `lim  T(t),  t → ${ts}⁻`;
+  document.getElementById('ll-val').textContent  = Ls + ' °C';
+  // Right card
+  document.getElementById('lr-math').textContent = `lim  T(t),  t → ${ts}⁺`;
+  document.getElementById('lr-val').textContent  = Ls + ' °C';
+  // Result card
+  document.getElementById('lres-math').textContent = `lim T(t),  t → ${ts}`;
+  document.getElementById('lres-val').textContent  = Ls + ' °C';
+
+  // Animate cards
+  const cl = document.getElementById('lc-left');
+  const cr = document.getElementById('lc-right');
+  const cc = document.getElementById('lc-result');
+  cl.classList.remove('active-left'); cr.classList.remove('active-right');
+  void cl.offsetWidth;
+  setTimeout(()=>cl.classList.add('active-left'),  50);
+  setTimeout(()=>cr.classList.add('active-right'), 400);
+  setTimeout(()=>{ cc.style.borderColor='#2e7d52'; cc.style.background='rgba(46,125,82,.12)'; }, 800);
+
+  // Conclusion text
+  document.getElementById('lateral-conclusion').innerHTML =
+    `Como $\\lim_{t\\to ${ts}^-} T(t) = \\lim_{t\\to ${ts}^+} T(t) = ${Ls}\\,°C$, ` +
+    `el límite en $t^* = ${ts}$ <strong>existe</strong> y $\\lim_{t\\to ${ts}} T(t) = ${Ls}\\,°C$.`;
+
+  // Approach mini-animation
+  startApproachAnim(tstar, Lval, p);
+
+  // ε-δ proof
+  buildEpsDelta(tstar, Lval, p);
+
+  // Re-render KaTeX in panel
+  if(window.renderMathInElement){
+    renderMathInElement(document.getElementById('lateral-panel'),{
+      delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]
+    });
+    renderMathInElement(document.getElementById('epsdelta-block'),{
+      delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]
+    });
+  }
+}
+
+/* ── Approach mini-canvas animation ── */
+function startApproachAnim(tstar, Lval, p){
+  if(approachRAF){ cancelAnimationFrame(approachRAF); approachRAF=null; }
+  const canvas = document.getElementById('approachCanvas');
+  if(!canvas) return;
+  const DPR = Math.min(devicePixelRatio||1, 2);
+  canvas.width  = canvas.offsetWidth  * DPR;
+  canvas.height = canvas.offsetHeight * DPR;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+
+  const tmin = Math.max(0, tstar - p.tmax * 0.25);
+  const tmax2 = Math.min(p.tmax, tstar + p.tmax * 0.25);
+  const Tmin = Math.min(Tfn_global(tmin,p), Tfn_global(tmax2,p)) - 3;
+  const Tmax = Math.max(Tfn_global(tmin,p), Tfn_global(tmax2,p)) + 3;
+  const mx = t => (t - tmin)/(tmax2 - tmin) * (W - 40) + 20;
+  const my = T => H - ((T - Tmin)/(Tmax - Tmin)) * (H - 24) - 12;
+
+  const STEPS = 180;
+  let frame = 0;
+
+  function drawFrame(){
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle='#080c12'; ctx.fillRect(0,0,W,H);
+
+    // curve
+    ctx.beginPath();
+    for(let i=0;i<=120;i++){
+      const t = tmin + (i/120)*(tmax2-tmin);
+      i===0 ? ctx.moveTo(mx(t),my(Tfn_global(t,p))) : ctx.lineTo(mx(t),my(Tfn_global(t,p)));
+    }
+    ctx.strokeStyle='rgba(200,169,81,.4)'; ctx.lineWidth=1.5*DPR; ctx.stroke();
+
+    // vertical dashed line
+    ctx.setLineDash([4*DPR,3*DPR]);
+    ctx.beginPath(); ctx.moveTo(mx(tstar),12); ctx.lineTo(mx(tstar),H-12);
+    ctx.strokeStyle='rgba(255,255,255,.2)'; ctx.lineWidth=DPR; ctx.stroke();
+    ctx.setLineDash([]);
+
+    // horizontal limit line
+    ctx.setLineDash([3*DPR,3*DPR]);
+    ctx.beginPath(); ctx.moveTo(20,my(Lval)); ctx.lineTo(W-20,my(Lval));
+    ctx.strokeStyle='rgba(46,125,82,.5)'; ctx.lineWidth=DPR; ctx.stroke();
+    ctx.setLineDash([]);
+
+    // approach: offset shrinks from ~20% of range to 0.2
+    const progress = frame / STEPS;
+    const maxOff   = (tmax2 - tmin) * 0.4;
+    const offset   = Math.max(0.15, maxOff * (1 - progress));
+
+    const tL = Math.max(tmin + 0.1, tstar - offset);
+    const tR = Math.min(tmax2 - 0.1, tstar + offset);
+    const TL = Tfn_global(tL, p);
+    const TR = Tfn_global(tR, p);
+
+    // arrow left
+    ctx.beginPath(); ctx.moveTo(mx(tL),my(TL)); ctx.lineTo(mx(tstar),my(Lval));
+    ctx.strokeStyle=`rgba(74,127,168,${0.4+progress*0.5})`; ctx.lineWidth=1.5*DPR; ctx.stroke();
+    // arrow right
+    ctx.beginPath(); ctx.moveTo(mx(tR),my(TR)); ctx.lineTo(mx(tstar),my(Lval));
+    ctx.strokeStyle=`rgba(200,80,80,${0.4+progress*0.5})`; ctx.lineWidth=1.5*DPR; ctx.stroke();
+
+    // dot left (blue)
+    ctx.beginPath(); ctx.arc(mx(tL),my(TL), 4*DPR, 0, Math.PI*2);
+    ctx.fillStyle='#4a7fa8'; ctx.fill();
+    // dot right (red)
+    ctx.beginPath(); ctx.arc(mx(tR),my(TR), 4*DPR, 0, Math.PI*2);
+    ctx.fillStyle='#c85050'; ctx.fill();
+    // limit dot
+    const reached = offset < 0.3;
+    ctx.beginPath(); ctx.arc(mx(tstar),my(Lval), 5*DPR, 0, Math.PI*2);
+    ctx.fillStyle = reached ? '#e8c97a' : 'rgba(232,201,122,.35)'; ctx.fill();
+
+    // labels
+    ctx.font = `${10*DPR}px 'JetBrains Mono',monospace`;
+    ctx.textAlign='center';
+    ctx.fillStyle='rgba(74,127,168,.9)';
+    ctx.fillText('t→t*⁻', mx(tL), my(TL)-7*DPR);
+    ctx.fillStyle='rgba(200,80,80,.9)';
+    ctx.fillText('t→t*⁺', mx(tR), my(TR)-7*DPR);
+    ctx.fillStyle='rgba(232,201,122,.8)';
+    ctx.fillText('L='+Lval.toFixed(1)+'°', mx(tstar)+28*DPR, my(Lval)-4*DPR);
+
+    frame++;
+    if(frame < STEPS) approachRAF = requestAnimationFrame(drawFrame);
+    else {
+      // hold last frame then restart
+      setTimeout(()=>{ frame=0; approachRAF=requestAnimationFrame(drawFrame); }, 1800);
+    }
+  }
+  approachRAF = requestAnimationFrame(drawFrame);
+}
+
+/* ── ε-δ proof builder ── */
+function buildEpsDelta(tstar, Lval, p){
+  const ts  = tstar.toFixed(3);
+  const Ls  = Lval.toFixed(4);
+  const k   = p.k.toFixed(4);
+  const T0  = p.T0;
+  const Tm  = p.Tm;
+  const C   = (T0 - Tm).toFixed(4);
+  const ekt = Math.exp(p.k * tstar).toFixed(6);
+  const M   = 2 * Math.abs(p.k) * Math.abs(T0 - Tm) * Math.exp(p.k * tstar);
+  const Mstr = M.toFixed(5);
+
+  const html = `
+  <div class="epsdelta-proof">
+    <div class="epsdelta-title">Demostración formal en $t^* = ${ts}$ &nbsp;(valor seleccionado en el Explorador)</div>
+
+    <div class="epsdelta-step">
+      <span class="step-tag">Paso 1 — Identificar L</span>
+      Por sustitución directa (continuidad de $T$):
+      $$L = T(${ts}) = ${Tm} + ${C}\\cdot e^{${k}\\cdot ${ts}} = ${Tm} + ${C}\\cdot ${ekt} = ${Ls}\\,°C$$
+    </div>
+
+    <div class="epsdelta-step">
+      <span class="step-tag">Paso 2 — Acotar $|T(t) - L|$</span>
+      $$|T(t)-L| = \\left|(T_m + C\\,e^{kt}) - (T_m + C\\,e^{kt^*})\\right| = |C|\\,e^{k\\,\\min(t,t^*)}\\,\\left|e^{k(t-t^*)}-1\\right|$$
+      Para $t$ cerca de $t^*$, usando $|e^u - 1| \\leq 2|u|$ (con $|u|\\leq 1$):
+      $$|T(t)-L| \\leq |C|\\,e^{kt^*}\\cdot 2|k|\\,|t-t^*|$$
+    </div>
+
+    <div class="epsdelta-step">
+      <span class="step-tag">Paso 3 — Elegir $\\delta$</span>
+      Sea $M = 2|k|\\,|C|\\,e^{kt^*} = ${Mstr}$.
+      Dado $\\varepsilon > 0$, elegimos:
+      $$\\delta = \\min\\!\\left(1,\\,\\frac{\\varepsilon}{M}\\right)$$
+    </div>
+
+    <div class="epsdelta-step">
+      <span class="step-tag">Paso 4 — Verificar la implicación</span>
+      Si $0 < |t - ${ts}| < \\delta$, entonces:
+      $$|T(t) - ${Ls}| \\leq M\\cdot|t-t^*| < M\\cdot\\delta \\leq M\\cdot\\frac{\\varepsilon}{M} = \\varepsilon \\quad \\checkmark$$
+    </div>
+
+    <div class="epsdelta-conclusion">
+      <strong>Conclusión:</strong> Se ha verificado la definición $\\varepsilon$-$\\delta$. Por tanto,
+      $$\\lim_{t\\to ${ts}} T(t) = ${Ls}\\,°C$$
+      Lo cual es consistente con los límites laterales calculados anteriormente. $\\blacksquare$
+    </div>
+
+    <!-- ε-δ interactive visualizer -->
+    <div style="margin-top:1.4rem;">
+      <div style="font-family:'Playfair Display',serif;font-weight:700;color:var(--navy);font-size:.93rem;margin-bottom:.6rem;">
+        Visualización geométrica de $\\varepsilon$-$\\delta$
+      </div>
+      <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:.7rem;">
+        <label style="font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);">
+          $\\varepsilon$ (eps) =
+          <input type="range" id="sl_eps" min="0.5" max="15" value="5" step="0.5"
+            style="width:130px;accent-color:var(--crimson);vertical-align:middle;margin:0 .4rem;">
+          <span id="eps-val" style="font-weight:700;color:var(--crimson);min-width:32px;display:inline-block;">5.0</span>
+        </label>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--muted);">
+          → $\\delta = \\min(1,\\,\\text{eps} / ${Mstr}) = $
+          <strong id="delta-val" style="color:var(--navy);">—</strong>
+        </span>
+      </div>
+      <canvas id="epsdelta-canvas"
+        style="width:100%;height:240px;display:block;border-radius:4px;border:1px solid var(--border);background:#f8f6f1;"></canvas>
+    </div>
+  </div>`;
+
+  document.getElementById('epsdelta-block').innerHTML = html;
+
+  // --- Draw ε-δ canvas ---
+  const cnv = document.getElementById('epsdelta-canvas');
+  const epsSlider = document.getElementById('sl_eps');
+  const epsValEl  = document.getElementById('eps-val');
+  const deltaValEl= document.getElementById('delta-val');
+
+  function drawEpsDelta(){
+    const DPR = Math.min(devicePixelRatio||1,2);
+    cnv.width  = cnv.offsetWidth  * DPR;
+    cnv.height = cnv.offsetHeight * DPR;
+    const ctx2 = cnv.getContext('2d');
+    const W = cnv.width, H = cnv.height;
+    const eps = +epsSlider.value;
+    const delta = Math.min(1, eps / M);
+    epsValEl.textContent  = eps.toFixed(1);
+    deltaValEl.textContent= delta.toFixed(4);
+
+    // viewport: show ±max(delta*2, 2) around tstar horizontally
+    // and ±max(eps*1.5, 8) around Lval vertically
+    const tSpan = Math.max(delta * 3, 2.5);
+    const TSpan = Math.max(eps * 2,  10);
+    const tLo = tstar - tSpan, tHi = tstar + tSpan;
+    const TLo = Lval  - TSpan, THi = Lval  + TSpan;
+
+    const pad = {l:52*DPR, r:18*DPR, t:18*DPR, b:38*DPR};
+    const pw = W - pad.l - pad.r, ph = H - pad.t - pad.b;
+    const mx2 = t => pad.l + (t - tLo)/(tHi - tLo) * pw;
+    const my2 = T => pad.t + (1 - (T - TLo)/(THi - TLo)) * ph;
+
+    ctx2.clearRect(0,0,W,H);
+    ctx2.fillStyle='#f8f6f1'; ctx2.fillRect(0,0,W,H);
+
+    // ε band (horizontal, green)
+    const yTop = my2(Lval + eps), yBot = my2(Lval - eps);
+    ctx2.fillStyle='rgba(46,125,82,.10)';
+    ctx2.fillRect(pad.l, yTop, pw, yBot - yTop);
+    ctx2.strokeStyle='rgba(46,125,82,.55)'; ctx2.lineWidth=1.5*DPR; ctx2.setLineDash([5*DPR,3*DPR]);
+    ctx2.beginPath(); ctx2.moveTo(pad.l,yTop); ctx2.lineTo(pad.l+pw,yTop); ctx2.stroke();
+    ctx2.beginPath(); ctx2.moveTo(pad.l,yBot); ctx2.lineTo(pad.l+pw,yBot); ctx2.stroke();
+    ctx2.setLineDash([]);
+
+    // δ band (vertical, blue)
+    const xLeft = mx2(tstar - delta), xRight = mx2(tstar + delta);
+    ctx2.fillStyle='rgba(0,59,117,.08)';
+    ctx2.fillRect(xLeft, pad.t, xRight - xLeft, ph);
+    ctx2.strokeStyle='rgba(0,59,117,.45)'; ctx2.lineWidth=1.5*DPR; ctx2.setLineDash([5*DPR,3*DPR]);
+    ctx2.beginPath(); ctx2.moveTo(xLeft, pad.t); ctx2.lineTo(xLeft, pad.t+ph); ctx2.stroke();
+    ctx2.beginPath(); ctx2.moveTo(xRight,pad.t); ctx2.lineTo(xRight,pad.t+ph); ctx2.stroke();
+    ctx2.setLineDash([]);
+
+    // curve T(t) in range
+    ctx2.beginPath();
+    let first=true;
+    for(let i=0;i<=200;i++){
+      const t2 = tLo + (i/200)*(tHi-tLo);
+      const Tv = Tfn_global(t2, p);
+      if(Tv<TLo||Tv>THi){first=true;continue;}
+      first ? ctx2.moveTo(mx2(t2),my2(Tv)) : ctx2.lineTo(mx2(t2),my2(Tv));
+      first=false;
+    }
+    ctx2.strokeStyle='#9b1845'; ctx2.lineWidth=2.5*DPR; ctx2.stroke();
+
+    // L horizontal line
+    ctx2.strokeStyle='rgba(46,125,82,.8)'; ctx2.lineWidth=1.5*DPR;
+    ctx2.beginPath(); ctx2.moveTo(pad.l,my2(Lval)); ctx2.lineTo(pad.l+pw,my2(Lval)); ctx2.stroke();
+
+    // t* vertical line
+    ctx2.strokeStyle='rgba(155,24,69,.6)'; ctx2.lineWidth=1.5*DPR;
+    ctx2.beginPath(); ctx2.moveTo(mx2(tstar),pad.t); ctx2.lineTo(mx2(tstar),pad.t+ph); ctx2.stroke();
+
+    // limit point
+    ctx2.beginPath(); ctx2.arc(mx2(tstar),my2(Lval),6*DPR,0,Math.PI*2);
+    ctx2.fillStyle='#c8a951'; ctx2.fill();
+    ctx2.strokeStyle='#003B75'; ctx2.lineWidth=2*DPR; ctx2.stroke();
+
+    // axis labels
+    ctx2.font = `${11*DPR}px 'JetBrains Mono',monospace`;
+    ctx2.fillStyle='#6b6560'; ctx2.textAlign='center';
+    // t* label
+    ctx2.fillStyle='#9b1845';
+    ctx2.fillText('t*='+tstar.toFixed(1), mx2(tstar), pad.t+ph+26*DPR);
+    // δ labels
+    ctx2.fillStyle='rgba(0,59,117,.7)';
+    ctx2.fillText('t*−δ', xLeft, pad.t+ph+26*DPR);
+    ctx2.fillText('t*+δ', xRight, pad.t+ph+26*DPR);
+    // L and ε labels
+    ctx2.fillStyle='rgba(46,125,82,.85)'; ctx2.textAlign='right';
+    ctx2.fillText('L',       pad.l-6*DPR, my2(Lval)+4*DPR);
+    ctx2.fillText('L+eps',  pad.l-6*DPR, yTop+4*DPR);
+    ctx2.fillText('L-eps',  pad.l-6*DPR, yBot+4*DPR);
+
+    // legend
+    ctx2.font = `${10*DPR}px 'Source Serif 4',serif`;
+    ctx2.fillStyle='rgba(0,59,117,.6)'; ctx2.textAlign='left';
+    ctx2.fillText('▐ banda delta', pad.l+6*DPR, pad.t+15*DPR);
+    ctx2.fillStyle='rgba(46,125,82,.6)';
+    ctx2.fillText('▬ banda eps',  pad.l+90*DPR, pad.t+15*DPR);
+  }
+
+  setTimeout(()=>{
+    drawEpsDelta();
+    epsSlider.addEventListener('input', drawEpsDelta);
+    window.addEventListener('resize', drawEpsDelta);
+  }, 80);
+}
+
+</script>
+</body>
+</html>
